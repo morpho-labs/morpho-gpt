@@ -45,30 +45,6 @@ When the P2P Index Cursor (changeable through governance) is set to 0.5, the P2P
 
 For example, let's assume the Pool Supply APY for USDC is 1% on Aave, while its Pool Borrow APY stands at 3%. When matched via Morpho, the rate earned (paid) by a lender (borrower) is 2%.
 
-�
-2
-�
-�
-�
-�
-=
-(
-1
-−
-0.5
-)
-×
-1
-%
-
-- 0.5
-  ×
-  3
-  %
-  =
-  2
-  %
-
 The borrower pays 1% less, while the supplier earns 1% more when using Morpho. That's a Pareto improvement for the lending markets and a win-win for both sides.
 
 Note some edge cases may have a small spread applied on either side due to the delta mechanism, a scaling system designed to guarantee that funds remain liquid in all situations.

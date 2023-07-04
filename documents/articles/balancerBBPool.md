@@ -35,13 +35,11 @@ What is under the hood of bb-ma2-USD?
 Boosted Morpho-Aave USD is a Composable Stable Pool that facilitates trades between three USD stablecoins: USDC, USDT, and DAI. Each asset is wrapped through Morpho-Aave V2’s market, providing liquidity providers with better yields than non-boosted pools.
 
 bb-ma2-USD
-bb-ma2-USD
 The three underlying Linear Pools that make up bb-ma2-USD are:
 bb-ma2-USDC (consisting of USDC and wrapped maUSDC)
 bb-ma2-USDT (consisting of USDT and wrapped maUSDT)
 bb-ma2-DAI (consisting of DAI and wrapped maDAI)
 
-bb-ma2-USD linear pools
 bb-ma2-USD linear pools
 If you are a bb-a-USD liquidity provider, it may be worth switching liquidity to bb-ma2-USD to enjoy better capital efficiency and potentially higher APRs.
 

@@ -62,21 +62,6 @@ borrow rates of the main DeFi protocols, there is a pain point for both
 sides of the market: borrow rates are high compared to very low supply
 rates.
 
-Let's take the Compound Protocol as an example:
-
-![[]{#fig:comp_spread_interface label="fig:comp_spread_interface"}APY
-spread in
-app.compound.finance](comp_spread_interface.png){#fig:comp_spread_interface
-width="90%"}
-
-![ []{#fig:comp_rate_spread label="fig:comp_rate_spread"}APY spread of
-Compound on ETH over 500k Ethereum blocks
-](rate_spread.png){#fig:comp_rate_spread width="90%"}
-
-For Ether, an average supply APY ($\beta_{s}$) of $0.1\%$ and an average
-borrow APY ($\beta_{b}$) of $2.7\%$ are observed[^4].
-
-::: exmp
 **Example 1**. _Assume that Alice supplies 1000 DAI and Bob borrows 1000
 DAI on Compound. After a year, Alice only earned 1 DAI while Bob paid 27
 DAI. Both parties may also get some COMP rewards tokens, but we will
@@ -104,43 +89,7 @@ model, positions do not have a fixed term and that suppliers are not
 competing with each other: the interest paid is shared amongst all
 suppliers, proportionally to the amount supplied. In practice, suppliers
 are committing much more capital to the pool than is ultimately
-utilized. Large amounts of capital thus remain unused in the pool and
-mechanically, the experienced supply APY is lower than the borrow APY.
-The equation that drives the supplying and borrowing rates is well
-documented in the Compound protocol[^6]: $$\left\{
-    \begin{array}{ll}
-        \beta_{b}=A*U+B\\
-       \beta_{s}=\beta_{b}*U*(1-R)
-    \end{array}
-\right.$$ where:
-
-::: eqexpl
-$A$ Slope of the borrowing rate curve.
-
-$U$ Utilization rate of the pool.
-
-$R$ Reserve factor.
-
-$B$ Intercept of the borrowing rate curve.
-:::
-
-Thus, the spread is given by:
-$$\beta_{b}-\beta_{s} = (A*U+B)*(1 -U*(1-R))$$
-
-The slope and intercept of these curves are often adjusted by Compound's
-governance. Once these parameters have been established, the spread is
-fully determined by the above equation.
-
-- The utilization rate $U$ of the pool is the percentage of the
-  liquidity that is borrowed. All suppliers provide liquidity to a
-  pool for a few borrowers. The interests paid by a borrow are evenly
-  shared amongst all suppliers as they do not compete in the Compound
-  pool.
-
-- The Compound reserve factor $R$: a fee going to a DAO-controlled
-  vault to pay for different protocol actions like refunds or to fund
-  contributors like Compound Labs. The fee is usually a percentage of
-  the APY [^7].
+utilized.
 
 The spread between APYs is intentional, as keeping utilization rates
 below 100% enables users to both withdraw current funds or borrow new
@@ -180,11 +129,6 @@ both sides of the market could use an APY within the spread, for example
 near 1.4%. Both sides win without taking riskier positions. In that
 regard, Morpho is a Pareto-improvement of current liquidity protocols.
 
-![[]{#fig:rate_spread_with_P2P label="fig:rate_spread_with_P2P"}Compound
-rates compared to the Morpho P2P APY on ETH over 500k Ethereum
-blocks.](rate_spread_with_P2P.png){#fig:rate_spread_with_P2P
-width="90%"}
-
 Users eventually get permanent positions with self-adjusting rates,
 being, at best, the exact rate that the matched borrower is paying, and
 at worst, the rate of the PLF that Morpho falls back on. Morpho can
@@ -216,9 +160,7 @@ use cases.
 
 # The Morpho Protocol
 
-This is a simplified introduction to the Morpho Protocol. We are
-currently working on a fully detailed Yellow Paper and hope to release
-it in 2022.
+This is a simplified introduction to the Morpho Protocol. We worked on a fully detailed Yellow Paper that was released in 2023.
 
 ## High-level description {#High-level description}
 
@@ -243,10 +185,6 @@ this setting.
   the cTokens and use them later to move the positions out of the
   Compound pool (Steps 4 to 7).
 
-  ![[]{#fig:supply_morpho label="fig:supply_morpho"}A supplier
-deposits liquidity to Morpho](supply_morpho.png){#fig:supply_morpho
-  width="80%"}
-
 - Borrow tokens: the user first provides some collateral, say BAT
   tokens, with the same collateral factors as in Compound and triggers
   the borrow function (Step 4). In the background, the protocol first
@@ -259,10 +197,6 @@ deposits liquidity to Morpho](supply_morpho.png){#fig:supply_morpho
   getting better rates. Note that the debt can be matched with only a
   part of a supplier deposit if it is small, or with the deposits of
   multiple suppliers in the other case.
-
-  ![[]{#fig:borrow_morpho label="fig:borrow_morpho"}A borrower takes
-liquidity from Morpho](borrow_morpho.png){#fig:borrow_morpho
-  width="80%"}
 
 Notice that during the P2P position, users are out of the pool and thus
 seamlessly have a P2P position with a utilization rate of 100%. Since
@@ -349,14 +283,6 @@ spread or even invert it. This scenario is tackled in
 [2.5](#Liquidity mining and inverted spreads){reference-type="ref"
 reference="Liquidity mining and inverted spreads"}.
 
-Let's illustrate one scenario for the supplier and for the borrower.
-
-![[]{#fig:supplier_morpho label="fig:supplier_morpho"}APY of a supplier
-using Morpho](supplier_morpho.png){#fig:supplier_morpho width="80%"}
-
-![[]{#fig:borrower_morpho label="fig:borrower_morpho"}APY of a borrower
-using Morpho](borrower_morpho.png){#fig:borrower_morpho width="80%"}
-
 As can be seen, when a P2P match is created or ended, the user jumps
 from experiencing a Compound rate to the optimized P2P APY offered by
 Morpho. Many questions arise. How do we track the P2P APY, and how is it
@@ -388,25 +314,7 @@ $$valueInUnderlying = valueInP2PUnit \times p2pIndex$$
 The variable $p2pIndex$ is updated according to the mid-rate yield per
 block via an internal function, which is called each time a user calls a
 function that needs to do the conversion to this unit. Note that the
-complexity is constant.
-
-::: exmp
-**Example 5**. _Assume 1 ETH = 200 cETH. Alice comes first and supplies
-1 ETH to Morpho, her supply balance becomes: $$\left\{
-    \begin{array}{ll}
-    onPool: 200 \:cETH\\
-    inP2P: 0 \:p2pETH
-    \end{array}
-\right.$$ Now Bob borrows 1 ETH. Assume that, at this moment, 1 ETH =
-100 p2pETH. Alice's supply balance becomes: $$\left\{
-    \begin{array}{ll}
-    onPool:  0\:cETH\\
-    inP2P: 100 \:p2pETH
-    \end{array}
-\right.$$ Note that Bob shares the same numbers for his borrowing
-balance. A year later, if the mid-rate remains 1.4%, the price of p2pETH
-should be approximately 1 ETH = 98.6 p2pETH._
-:::
+complexity is constant
 
 Note that in current PLFs there is a great imbalance between the volume
 of loanable funds compared to the volume of demand. This is done on
@@ -621,13 +529,12 @@ trading strategies.
 Morpho introduces new lines of code, connecting to existing protocols.
 One has to be fully aware of what that means when using the protocol.
 First, it induces an additional gas price when using Morpho-Compound
-rather than Compound. Second, Morpho is a new layer of smart contracts
-that is yet to be battle-tested in the market. The latter introduces
-additional hack risk for the user. Nonetheless, it should be noted that
-the most famous auditors in the world like Trail of Bits, Chainsecurity,
+rather than Compound. Second, Morpho is a new layer of smart contracts. The latter introduces
+additional risk for the user however more than 20 audits have been conducted on Morpho protocols.
+Nonetheless, it should be noted that the most famous auditors in the world like Trail of Bits, Chainsecurity,
 or Spearbits each have or will soon audit Morpho Protocol. Finally, with
 the help of Certora, the Morpho Labs team is undergoing the formal
-proving of the protocol.
+proving of the protocol. The yellow paper also demonstrates mechanisms and theorem behind.
 
 # Conclusions
 
@@ -740,23 +647,3 @@ could be impacted by regulatory action, including potential restrictions
 on the ownership, use, or possession of such tokens. Regulators or other
 competent authorities may demand that the mechanics of the Morpho Tokens
 be altered, entirely or in part.
-
-[^1]:
-    Corresponding author, please direct any enquiry to
-    <contact@morpho.org>
-
-[^2]: Visiting Academic
-[^3]: As of September 2021, over \$ 45 billion combined
-[^4]:
-    This is an average over 500k Ethereum blocks, which represents
-    approximately 90 days
-
-[^5]: In Aave, cTokens are replaced by aTokens
-[^6]:
-    Note that in practice, Compound supply rates are affine by piece
-    functions that change slope after passing a certain utilization
-    threshold. To simplify, we only considered one slope, as it does not
-    change the following results
-
-[^7]: As of September 2021, between 7% to 25% of the interest rate
-[^8]: Dust is defined as very small amounts.

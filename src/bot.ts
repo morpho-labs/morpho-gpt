@@ -24,23 +24,6 @@ async function startBot() {
   } catch (error) {
     console.error(`Failed to setup Pinecone Index: ${error}`);
   }
-  // Event listener for the "messageCreate" event
-  client.on(Events.MessageCreate, async (message) => {
-    // Ignore messages from bots
-    if (message.author.bot) return;
-
-    // Respond to the command "/whoAreYou"
-    if (message.content.toLowerCase() === "/whoareyou") {
-      try {
-        const channel = client.channels.cache.get(specificChannelId);
-        const textChannel = channel as typeof TextChannel;
-        // await textChannel.send("Hello, I'm ready!");
-        await message.channel.send("I belong to Morpho DAO, I am Morpho#8845");
-      } catch (error) {
-        console.error(`Failed to send a reply: ${error}`);
-      }
-    }
-  });
   // Store the timestamp of the last question asked
   let lastQuestionTime = 0;
   const questionCooldown = 60000;
@@ -49,6 +32,7 @@ async function startBot() {
   client.on(Events.MessageCreate, async (message) => {
     // Ignore messages from bots
     if (message.author.bot) return;
+    if (message.channelId !== specificChannelId) return;
     // Respond to commands starting with "/question"
     if (message.content.startsWith("/question")) {
       try {
@@ -66,12 +50,8 @@ async function startBot() {
 
         const question = message.content.replace("/question", "").trim();
         await message.channel.send(
-          "You asked: 👇🏼\n\n" +
-            "*" +
-            question +
-            "*" +
-            "\n\n We are currently computing an answer, wait a sec..." +
-            "\n\n 🚨 Please note that we are restricting those queries to 1 per minute, and that the bot may be innacurate.\n"
+          "Morpho GPT is thinking...\n" +
+            "\n*Reminder: I am still learning so my answers may be inaccurate.*"
         );
         // Handle the read command that retrieves the answer from the Pinecone Index and responds
         await handleReadCommand(client, message, question);

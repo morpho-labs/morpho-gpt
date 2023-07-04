@@ -6,6 +6,12 @@ Morpho is a peer-to-peer layer built on top of lending pools like Compound or Aa
 It is a lending pool optimizer: it improves the capital efficiency of positions on lending pools by seamlessly matching lenders and borrowers peer-to-peer. By doing so, Morpho enhances your rates while preserving the same experience, liquidity, and parameters (collateral factors, oracles, etc.) as the underlying pool.
 This means that by using Morpho, you either receive, in the worst-case scenario, the APY of the underlying pool; or an improved APY thanks to P2P matching. The improved APY is called the P2P APY.
 
+Morpho in 3 words?
+Resilient, Efficient, Open
+
+Why are gas fees so high on Morpho?
+Morpho Optimizers are built on top of the underlying protocols, which corresponds to an extra layer of computations, requiring more fees.
+
 Why use Morpho?
 Morpho enables one to supply and borrow crypto assets with optimal capital efficiency and deep liquidity.
 Is Morpho limited to the optimization of Aave and Compound?
@@ -18,10 +24,11 @@ How to earn/have some $MORPHO tokens? Are they transferable?
 Only by using the protocols, or contributing to it. They are not transferable at the moment. More information in the doc later.
 
 Is there an interest-bearing token (ibToken)?
-There is currently no ERC-20 ibToken. However, your position is, of course, recorded in Morpho's smart contracts. For example, you can visualize it on this front end, Etherscan, DeBank, or Zerion.
+There is currently no ERC-20 ibToken. However, your position is, of course, recorded in Morpho's smart contracts. For example, you can visualize it on this front end, DeBank, Warden, or Zerion.
 Similar to Uniswap v3, Morpho users have non-fungible positions. This is because some users are matched, and some others are not. It could be possible to eventually represent a Morpho position as an NFT, but it is currently not the case.
 
-The Morpho Labs team is working on a set of ERC-4626 adapters to facilitate some integrations for the lenders' side. If this is something your use case needs, feel free to contact us directly.
+The Morpho Labs team worked on a set of ERC-4626 adapters to facilitate some integrations for the lenders' side. If this is something your use case needs, feel free to contact us directly.
+
 What is the difference between Peer-to-Peer (P2P) and Peer-to-Pool (P2Pool)?
 
 With P2Pool, lenders provide liquidity to a pool of assets, and borrowers borrow liquidity from it. Instead of each party interacting directly with the other, they interact with a commonly shared pool. In that case, yields are socialized, meaning that the lenders share the interests paid by the borrowers proportionally to their share of the pool.

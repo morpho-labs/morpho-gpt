@@ -34,12 +34,14 @@ export async function handleReadCommand(
 
       // Prepare a string that contains all the document links
       let linksString = documentLinks
-        .map((link: string, index: number) => `**Link ${index + 1}:** ${link}`)
+        .map(
+          (link: string, index: number) => `**Link ${index + 1}:** <${link}>`
+        )
         .join("\n");
 
       // Send the answer and document links as a message to the Discord channel
       message.channel.send(
-        `\n**Answer:**\n ${result.answer}\n**Document Links (for deeper research):**\n${linksString}`
+        `\n**Answer:**\n ${result.answer}\n**Useful resources:**\n${linksString}`
       );
     } else {
       // Send a message to the Discord channel if no results were found

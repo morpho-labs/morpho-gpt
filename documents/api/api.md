@@ -9,7 +9,7 @@ Introduction
 The Morpho API is a RESTful API that provides easy and performant access to public data from the Morpho Protocol. It allows developers to programmatically interact with the protocol and retrieve various types of data, such as analytics, rates, APY over time, or rewards for every user. This document provides a comprehensive guide to the API and explains how to use it effectively.
 Getting Started
 
-To use the Morpho API, you need to know the base URL of the API and the available endpoints. The base URL for the Morpho API is https://api.morpho.xyz/.
+To use the Morpho API, you need to know the base URL of the API and the available endpoints. The base URL for the Morpho API is https://api.morpho.org/.
 
 Explore the API
 
@@ -45,5 +45,3 @@ The following endpoints are available in the Morpho API:
    <>
 4. /protocols
    {protocol}/user/{address} -> user balances on the protocol.
-
-If you have any questions or need further assistance, please don't hesitate to reach out on .

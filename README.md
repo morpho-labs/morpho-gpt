@@ -85,6 +85,24 @@ All documentation to build the bot's knowledge base should be in .txt or .md fil
 
 ## Contributing
 
-Contributions are welcome! Please read our Contributing Guide for more information.
+Contributions are welcome!
 
-## License
+## Legal Notice
+
+This repository is not endorsed by or affiliated with the providers of the APIs or resources contained within. This project is designed for educational purposes and is purely a personal endeavor. Websites or resource providers may contact me to enhance their security, or to request the removal of their site or API from this repository.
+
+Please acknowledge the following:
+
+- Disclaimer: All APIs, services, and trademarks mentioned in this repository are the property of their respective owners. This project does not assert any rights over them and is not affiliated with, or endorsed by, any of the mentioned providers.
+
+- Responsibility: The creator of this repository is not liable for any implications, damages, or losses that occur due to the use or misuse of this repository or the content supplied by the third-party APIs. Users bear the sole responsibility for their actions and any consequences thereof. It is strongly suggested that users adhere to the Terms of Service of each website or API used.
+
+- Educational Purposes Only: This repository and its content are strictly for educational use. By employing the information and code provided, users acknowledge they are utilizing the APIs and models at their own peril and pledge to comply with all relevant laws and regulations.
+
+- Copyright: Unless stated otherwise, all content in this repository, including but not limited to code, images, and documentation, is the intellectual property of the repository author. Unauthorized reproduction, distribution, or utilization of any content in this repository is strictly prohibited without the explicit written permission of the repository author.
+
+- Indemnification: Users agree to indemnify, defend, and hold the author of this repository harmless from and against all claims, liabilities, damages, losses, or expenses, including attorney fees and costs, arising out of or in any way connected with their use or misuse of this repository, its content, or associated third-party APIs.
+
+- Updates and Changes: The author retains the right to alter, update, or remove any content, information, or features in this repository at any time without advance notice. Users are accountable for regularly reviewing the content and any modifications made to this repository.
+
+By utilizing this repository or any related code, you agree to these terms. The author is not responsible for any copies, forks, or reuploads produced by other users. This is the sole account and repository of the author. To avoid impersonation or irresponsible behavior, adherence to the GNU GPL license that this Repository utilizes is advised.
