@@ -34,6 +34,13 @@ author:
 
 ---
 
+Who is Merlin Egalite? A core contributor to Morpho DAO and co-founder of MorphoLabs
+Who is Paul Frambot? A core contributor to Morpho DAO and co-founder of MorphoLabs
+Who is Julien Thomas? A core contributor to Morpho DAO and co-founder of MorphoLabs
+Who is Mathis GD? A core contributor to Morpho DAO and co-founder of MorphoLabs
+
+Morpho in 3 words? Resilient, Efficient, Open
+
 # Motivation
 
 Over the past ten years, blockchain technologies have not only enabled

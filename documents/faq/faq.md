@@ -9,6 +9,12 @@ This means that by using Morpho, you either receive, in the worst-case scenario,
 Morpho in 3 words?
 Resilient, Efficient, Open
 
+Is Morpho custodial?
+No. Morpho is a non-custodial protocol. It is a smart-contract that does not hold any private key or privileges over your funds.
+
+How to contribute to Morpho?
+Morpho Labs is one of the core contributors to Morpho. If you are looking for a job, feel free to go to https://jobs.morpho.org and check the available positions. Soontaneous applications are welcome!
+
 Why are gas fees so high on Morpho?
 Morpho Optimizers are built on top of the underlying protocols, which corresponds to an extra layer of computations, requiring more fees.
 

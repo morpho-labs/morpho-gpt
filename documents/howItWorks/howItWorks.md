@@ -14,6 +14,8 @@ Let's work through an example. Say Alice is the first lender to come to Morpho. 
 Then, Bob, a borrower, comes in. Morpho automatically removes Alice's liquidity from the pool to match Bob at the P2P rate. Both receive a better rate, a win-win for both parties.
 If and when one of the two leaves, Morpho will tap into the liquidity of the underlying lending pool - also known as the fallback mechanism.
 On this graph, one sees that Morpho enables improved rates for both parties while ensuring that a user can break the peer-to-peer match to fall back on the pool at any moment.
+
+Why can we say that Morpho provides better rates? Suppliers can lend at a higher rate (then earn more yield) and Borrowers can borrow at lower rates (then pay less). Thus Morpho is providing better rates.
 To ensure Morpho is an improvement for both suppliers and borrowers, the P2P APY is chosen by Morpho's DAO within the interval [lendingAPY; borrowingAPY]of the underlying protocol's pool. This is done through the p2pIndexCursor parameter set by governance, selected from within [0; 1], representing the position of the P2P APY within [lendingAPY; borrowingAPY].
 
 How matching works
