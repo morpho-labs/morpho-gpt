@@ -31,7 +31,7 @@ To run this project, you need the following:
 - Node.js and npm installed on your local environment
 - Discord API Key
 - Pinecone API Key
-- GPT-3 API Key
+- GPT-3.5 API Key
 
 ### Installation
 

@@ -6,8 +6,8 @@
     "strict": true,
     "esModuleInterop": true,
     "incremental": true,
-    "tsBuildInfoFile": "./tsconfig.tsbuildinfo",
     "skipLibCheck": true
   },
-  "include": ["src"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }

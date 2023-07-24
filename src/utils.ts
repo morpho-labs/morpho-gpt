@@ -3,15 +3,13 @@ import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { OpenAI } from "langchain/llms/openai";
 import { loadQAStuffChain } from "langchain/chains";
 import { Document } from "langchain/document";
-import { getModelContextSize } from "langchain/dist/base_language/count_tokens";
-
-const timeout = 180000;
+import { PineconeClient } from "@pinecone-database/pinecone";
 
 // Function to query the Pinecone vector store and Query Language Model
 export const queryPineconeVectorStoreAndQueryLLM = async (
-  client: any,
-  indexName: any,
-  question: any
+  client: PineconeClient,
+  indexName: string,
+  question: string
 ) => {
   // Starting the query process
   console.log("Querying Pinecone vector store...");
@@ -28,11 +26,12 @@ export const queryPineconeVectorStoreAndQueryLLM = async (
       includeValues: true,
     },
   });
-  // Log the number of matches found
-  console.log(`Found ${queryResponse.matches.length} matches...`);
   // Log the question being asked
   console.log(`Asking question: ${question}...`);
-  if (queryResponse.matches.length) {
+  if (queryResponse && queryResponse.matches && queryResponse.matches.length) {
+    // Log the number of matches found
+    console.log(`Found ${queryResponse.matches.length} matches...`);
+
     // Create an OpenAI instance and load the QAStuffChain
     const instructions =
       "You're an AI assistant. Based on the following excerpts from a long document, provide a conversational answer to the question asked. If the answer isn't in the context, simply respond with 'Hmm, I'm not sure.' Don't invent an answer. If the question isn't related to the context, state that you are programmed to answer questions relevant to the given context. Remember, you cannot use images or visual content to form your answer. Do the answer in less than 2000 caracters.";
@@ -60,13 +59,14 @@ export const queryPineconeVectorStoreAndQueryLLM = async (
     };
   } else {
     // If no matches were found, inform the user that GPT-3 won't be queried
-    console.log("Since there are no matches, GPT-3 will not be queried.");
+    console.log("Since there are no matches, GPT-3.5 will not be queried.");
   }
 };
-export const createPineconeIndex = async (
-  client: any,
-  indexName: any,
-  vectorDimension: any
+export const createPineconeIndexIfNotExist = async (
+  client: PineconeClient,
+  indexName: string,
+  vectorDimension: number,
+  timeout: number = 180000
 ) => {
   // Check if the index exists
   console.log(`Checking "${indexName}"...`);
@@ -87,19 +87,18 @@ export const createPineconeIndex = async (
     console.log(
       `Creating index.... please wait for it to finish initializing.`
     );
-    // Wait for 60 seconds to let the index initialize
+    // Wait for XXX seconds to let the index initialize
     await new Promise((resolve) => setTimeout(resolve, timeout));
   } else {
     // If the index exists, log that it already exists
     console.log(`"${indexName}" already exists.`);
   }
 };
-
 // Function to update Pinecone Index with new vectors
-export const updatePinecone = async (
-  client: any,
-  indexName: any,
-  docs: any
+export const updatePineconeIndex = async (
+  client: PineconeClient,
+  indexName: string,
+  docs: Document<Record<string, any>>[]
 ) => {
   console.log("Retrieving Pinecone index...");
   // Retrieve the specific Pinecone index

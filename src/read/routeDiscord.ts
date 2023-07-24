@@ -1,27 +1,20 @@
+import "dotenv/config";
 import { PineconeClient } from "@pinecone-database/pinecone";
+import { Message } from "discord.js";
 import { queryPineconeVectorStoreAndQueryLLM } from "../utils";
-import * as dotenv from "dotenv";
-dotenv.config();
 
-const indexNamePinecone = process.env.PINECONE_TEST_INDEX;
 // Function to handle the read command
 export async function handleReadCommand(
-  client: any,
-  message: any,
-  question: string
+  message: Message,
+  question: string,
+  pineconeClient: PineconeClient,
+  pineconeTestIndex: string
 ) {
-  // Initialize the Pinecone client
-  const pineconeClient = new PineconeClient();
-  await pineconeClient.init({
-    apiKey: process.env.PINECONE_API_KEY || "",
-    environment: process.env.PINECONE_ENVIRONMENT || "",
-  });
-
   try {
     // Query Pinecone vector store and retrieve answer and document links
     const result = await queryPineconeVectorStoreAndQueryLLM(
       pineconeClient,
-      indexNamePinecone,
+      pineconeTestIndex,
       question
     );
 
