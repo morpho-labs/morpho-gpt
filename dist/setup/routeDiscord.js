@@ -14,7 +14,7 @@ const text_1 = require("langchain/document_loaders/fs/text");
 const directory_1 = require("langchain/document_loaders/fs/directory");
 const utils_1 = require("../utils");
 // Function to handle the setup command
-function handleSetupCommand(pineconeClient, pineconeTestIndex) {
+function handleSetupCommand(pineconeClient, pineconeTestIndex, openAiApiKey) {
     return __awaiter(this, void 0, void 0, function* () {
         // Return a new promise that is resolved when the setup is complete
         // Create a loader for documents in the `/documents` directory
@@ -29,7 +29,7 @@ function handleSetupCommand(pineconeClient, pineconeTestIndex) {
         // Create a Pinecone index with the specified name and vector dimensions
         yield (0, utils_1.createPineconeIndexIfNotExist)(pineconeClient, pineconeTestIndex, VECTORDIMENSIONS, TIMEOUT);
         // Update the Pinecone index with the loaded documents
-        yield (0, utils_1.updatePineconeIndex)(pineconeClient, pineconeTestIndex, docs);
+        yield (0, utils_1.updatePineconeIndex)(pineconeClient, openAiApiKey, pineconeTestIndex, docs);
         // Log a success message
         console.log("Index created and data loaded into Pinecone successfully.");
     });

@@ -97,6 +97,7 @@ export const createPineconeIndexIfNotExist = async (
 // Function to update Pinecone Index with new vectors
 export const updatePineconeIndex = async (
   client: PineconeClient,
+  openAiApiKey: string,
   indexName: string,
   docs: Document<Record<string, any>>[]
 ) => {
@@ -104,10 +105,14 @@ export const updatePineconeIndex = async (
   // Retrieve the specific Pinecone index
   const index = client.Index(indexName);
   console.log(`Pinecone index retrieved: ${indexName}`);
+
   // Process each document in the docs array
   for (const doc of docs) {
-    console.log(`Processing document: ${doc.metadata.source}`);
-    const txtPath = doc.metadata.source;
+    // console.log(doc);
+    console.log(`Processing document: ${JSON.stringify(doc)}`);
+    // const txtPath = doc.metadata.source;
+    // console.log(`Processing document: ${doc.metadata.source}`);
+    const txtPath = await doc.metadata.source;
     const text = doc.pageContent;
 
     const documentLinkMatch = text.match(/Link: (.+)/);
@@ -125,7 +130,9 @@ export const updatePineconeIndex = async (
       `Calling OpenAI's Embedding endpoint documents with ${chunks.length} text chunks ...`
     );
     // Create embeddings for the documents
-    const embeddingsArrays = await new OpenAIEmbeddings().embedDocuments(
+    const embeddingsArrays = await new OpenAIEmbeddings({
+      openAIApiKey: openAiApiKey,
+    }).embedDocuments(
       chunks.map((chunk) => chunk.pageContent.replace(/\n/g, " "))
     );
     console.log("Finished embedding documents");

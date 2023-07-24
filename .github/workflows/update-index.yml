@@ -25,7 +25,7 @@ jobs:
         run: npm run build
 
       - name: Create index
-        run: npx morpho-gpt-cli createIndex ${{ secrets.PINECONE_TEST_INDEX }} -k ${{ secrets.PINECONE_API_KEY }} -e ${{ secrets.PINECONE_ENVIRONMENT }} -i ${{ secrets.PINECONE_TEST_INDEX }}
+        run: npx morpho-gpt-cli createIndex -i ${{ secrets.PINECONE_TEST_INDEX }} -k ${{ secrets.PINECONE_API_KEY }} -e ${{ secrets.PINECONE_ENVIRONMENT }} -d 1536 -t 200000
 
       - name: Update index
-        run: npx morpho-gpt-cli updateIndex ${{ secrets.PINECONE_TEST_INDEX }} ./documents -k ${{ secrets.PINECONE_API_KEY }} -e ${{ secrets.PINECONE_ENVIRONMENT }} -i ${{ secrets.PINECONE_TEST_INDEX }}
+        run: npx morpho-gpt-cli updateIndex -i ${{ secrets.PINECONE_TEST_INDEX }} -k ${{ secrets.PINECONE_API_KEY }} -e ${{ secrets.PINECONE_ENVIRONMENT }} -p "./documents" -a ${{ secrets.OPENAI_API_KEY }}

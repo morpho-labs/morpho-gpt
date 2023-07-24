@@ -1,46 +1,61 @@
 #!/usr/bin/env node
 const { program } = require("commander");
+const { TextLoader } = require("langchain/document_loaders/fs/text");
+const { DirectoryLoader } = require("langchain/document_loaders/fs/directory");
 const {
   createPineconeIndexIfNotExist,
   updatePineconeIndex,
 } = require("../dist/utils");
-const PineconeClient = require("@pinecone-database/pinecone"); // Import your Pinecone client
+const { PineconeClient } = require("@pinecone-database/pinecone"); // Import your Pinecone client
 
 program.version("0.0.1");
 
 program
-  .command("createIndex <indexName>")
+  .command("createIndex")
   .description("create a new Pinecone index")
-  .option("-d, --dimension <number>", "set the dimension of the vector", 300)
-  .option("-t, --timeout <number>", "set the timeout duration", 180000)
+  .option("-i, --indexName <string>", "Name of the Pinecone Index")
+  .option("-d, --dimension <number>", "set the dimension of the vector", 1536)
+  .option("-t, --timeout <number>", "set the timeout duration", 200000)
   .option("-k, --key <string>", "Pinecone API key")
   .option("-e, --environment <string>", "Pinecone environment")
-  .option("-i, --testindex <string>", "Pinecone test index")
-  .action(async (indexName, options) => {
-    const { key, environment, testindex, dimension, timeout } = options;
-    const client = new PineconeClient({
+  .action(async (options) => {
+    const { indexName, key, environment, dimension, timeout } = options;
+    const pineconeClient = new PineconeClient({});
+    await pineconeClient.init({
       apiKey: key,
       environment: environment,
-      defaultIndexName: testindex,
     });
-    await createPineconeIndexIfNotExist(client, indexName, dimension, timeout);
+    await createPineconeIndexIfNotExist(
+      pineconeClient,
+      indexName,
+      dimension,
+      timeout
+    );
   });
 
 program
-  .command("updateIndex <indexName> <path>")
+  .command("updateIndex")
   .description("Update a Pinecone index with new documents")
+  .option("-i, --indexName <string>", "Name of the Pinecone Index")
   .option("-k, --key <string>", "Pinecone API key")
   .option("-e, --environment <string>", "Pinecone environment")
-  .option("-i, --testindex <string>", "Pinecone test index")
-  .action(async (indexName, path, options) => {
-    const { key, environment, testindex } = options;
-    const client = new PineconeClient({
+  .option("-p, --pathDocs <string>", "Path of the documentation")
+  .option("-a, --openAiApiKey <string>", "OPENAI API key")
+  .action(async (options) => {
+    const { indexName, key, environment, pathDocs, openAiApiKey } = options;
+    const pineconeClient = new PineconeClient({});
+    await pineconeClient.init({
       apiKey: key,
       environment: environment,
-      defaultIndexName: testindex,
     });
-    const docs = readDocumentsFromFolder(path);
-    await updatePineconeIndex(client, indexName, docs);
+    const loader = new DirectoryLoader(pathDocs, {
+      // Load .txt and .md files using the TextLoader
+      ".txt": (path) => new TextLoader(path),
+      ".md": (path) => new TextLoader(path),
+    });
+
+    const docs = await loader.load();
+    await updatePineconeIndex(pineconeClient, openAiApiKey, indexName, docs);
   });
 
 program.parse(process.argv);

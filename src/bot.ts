@@ -6,6 +6,7 @@ import { PineconeClient } from "@pinecone-database/pinecone";
 
 async function startBot() {
   const discordApiKey = process.env.DISCORD_API_KEY;
+  const openAiApiKey = process.env.OPENAI_API_KEY;
   const specificChannelId = process.env.SPECIFIC_CHANNEL_ID || "";
   const pineconeTestIndex = process.env.PINECONE_TEST_INDEX;
   const pineconeApiKey = process.env.PINECONE_API_KEY ?? "";
@@ -28,7 +29,7 @@ async function startBot() {
   //The following try-catch can be deleted for prod version of the code, as handling the setup part is defined thanks to the cli.
   try {
     // Handle the setup command that sets up the Pinecone Index
-    await handleSetupCommand(pineconeClient, pineconeTestIndex!);
+    await handleSetupCommand(pineconeClient, pineconeTestIndex!, openAiApiKey!);
   } catch (error) {
     console.error(`Failed to setup Pinecone Index: ${error}`);
   }

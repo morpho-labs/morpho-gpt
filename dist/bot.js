@@ -41,6 +41,7 @@ function startBot() {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
         const discordApiKey = process.env.DISCORD_API_KEY;
+        const openAiApiKey = process.env.OPENAI_API_KEY;
         const specificChannelId = process.env.SPECIFIC_CHANNEL_ID || "";
         const pineconeTestIndex = process.env.PINECONE_TEST_INDEX;
         const pineconeApiKey = (_a = process.env.PINECONE_API_KEY) !== null && _a !== void 0 ? _a : "";
@@ -60,9 +61,10 @@ function startBot() {
             apiKey: pineconeApiKey,
             environment: pineconeEnvironment || "",
         });
+        //The following try-catch can be deleted for prod version of the code, as handling the setup part is defined thanks to the cli.
         try {
             // Handle the setup command that sets up the Pinecone Index
-            yield (0, routeDiscord_2.handleSetupCommand)(pineconeClient, pineconeTestIndex);
+            yield (0, routeDiscord_2.handleSetupCommand)(pineconeClient, pineconeTestIndex, openAiApiKey);
         }
         catch (error) {
             console.error(`Failed to setup Pinecone Index: ${error}`);

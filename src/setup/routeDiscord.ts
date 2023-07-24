@@ -6,7 +6,8 @@ import { PineconeClient } from "@pinecone-database/pinecone";
 // Function to handle the setup command
 export async function handleSetupCommand(
   pineconeClient: PineconeClient,
-  pineconeTestIndex: string
+  pineconeTestIndex: string,
+  openAiApiKey: string
 ): Promise<void> {
   // Return a new promise that is resolved when the setup is complete
   // Create a loader for documents in the `/documents` directory
@@ -29,7 +30,12 @@ export async function handleSetupCommand(
   );
 
   // Update the Pinecone index with the loaded documents
-  await updatePineconeIndex(pineconeClient, pineconeTestIndex, docs);
+  await updatePineconeIndex(
+    pineconeClient,
+    openAiApiKey,
+    pineconeTestIndex,
+    docs
+  );
 
   // Log a success message
   console.log("Index created and data loaded into Pinecone successfully.");
