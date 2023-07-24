@@ -3,7 +3,7 @@ const { program } = require("commander");
 const {
   createPineconeIndexIfNotExist,
   updatePineconeIndex,
-} = require("../src/utils");
+} = require("../dist/utils");
 const PineconeClient = require("@pinecone-database/pinecone"); // Import your Pinecone client
 
 program.version("0.0.1");

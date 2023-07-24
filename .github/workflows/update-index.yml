@@ -1,0 +1,31 @@
+name: Update Index
+
+on:
+  push:
+    paths:
+      - "documents/**"
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Create index
+        run: npx morpho-gpt-cli createIndex ${{ secrets.PINECONE_TEST_INDEX }} -k ${{ secrets.PINECONE_API_KEY }} -e ${{ secrets.PINECONE_ENVIRONMENT }} -i ${{ secrets.PINECONE_TEST_INDEX }}
+
+      - name: Update index
+        run: npx morpho-gpt-cli updateIndex ${{ secrets.PINECONE_TEST_INDEX }} ./documents -k ${{ secrets.PINECONE_API_KEY }} -e ${{ secrets.PINECONE_ENVIRONMENT }} -i ${{ secrets.PINECONE_TEST_INDEX }}
