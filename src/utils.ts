@@ -108,10 +108,7 @@ export const updatePineconeIndex = async (
 
   // Process each document in the docs array
   for (const doc of docs) {
-    // console.log(doc);
-    console.log(`Processing document: ${JSON.stringify(doc)}`);
-    // const txtPath = doc.metadata.source;
-    // console.log(`Processing document: ${doc.metadata.source}`);
+    console.log(`Processing document: ${doc.metadata.source}`);
     const txtPath = await doc.metadata.source;
     const text = doc.pageContent;
 

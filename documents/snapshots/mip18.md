@@ -78,4 +78,4 @@ Blog - https://blog.coinbase.com/
 
 Support - https://help.coinbase.com/
 
-The proposal has been executed here: https://etherscan.io/tx/0xac6673d13b5fdb2c24ab1f4c1a92a5eb2b1b7ff25669af30968bdf0e3970d177 Ethereum Transaction Hash (Txhash) Details | Etherscan. cbETH is now available as collateral on the Morpho-Aave V3 Optimizer!
+The proposal has been executed, the transaction can be seen here: https://etherscan.io/tx/0xac6673d13b5fdb2c24ab1f4c1a92a5eb2b1b7ff25669af30968bdf0e3970d177 cbETH is now available as collateral on the Morpho-Aave V3 Optimizer!
