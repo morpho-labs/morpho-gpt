@@ -6,20 +6,21 @@ const {
   createPineconeIndexIfNotExist,
   updatePineconeIndex,
 } = require("../dist/utils");
-const { PineconeClient } = require("@pinecone-database/pinecone"); // Import your Pinecone client
+const { PineconeClient } = require("@pinecone-database/pinecone");
 
 program.version("0.0.1");
 
 program
-  .command("createIndex")
+  .command("createIndex <indexName> <dimension> <key> <environment>")
   .description("create a new Pinecone index")
-  .option("-i, --indexName <string>", "Name of the Pinecone Index")
-  .option("-d, --dimension <number>", "set the dimension of the vector", 1536)
+  // If one prefers to let options below and not put args
+  // .option("-i, --indexName <string>", "Name of the Pinecone Index")
+  // .option("-d, --dimension <number>", "set the dimension of the vector", 1536)
+  // .option("-k, --key <string>", "Pinecone API key")
+  // .option("-e, --environment <string>", "Pinecone environment")
   .option("-t, --timeout <number>", "set the timeout duration", 200000)
-  .option("-k, --key <string>", "Pinecone API key")
-  .option("-e, --environment <string>", "Pinecone environment")
-  .action(async (options) => {
-    const { indexName, key, environment, dimension, timeout } = options;
+  .action(async (indexName, dimension, key, environment, options) => {
+    const { timeout } = options;
     const pineconeClient = new PineconeClient({});
     await pineconeClient.init({
       apiKey: key,
@@ -34,15 +35,16 @@ program
   });
 
 program
-  .command("updateIndex")
+  .command("updateIndex <indexName> <key> <environment> <openAiApiKey>")
   .description("Update a Pinecone index with new documents")
-  .option("-i, --indexName <string>", "Name of the Pinecone Index")
-  .option("-k, --key <string>", "Pinecone API key")
-  .option("-e, --environment <string>", "Pinecone environment")
+  // If one prefers to let options below and not put args
+  // .option("-i, --indexName <string>", "Name of the Pinecone Index")
+  // .option("-k, --key <string>", "Pinecone API key")
+  // .option("-e, --environment <string>", "Pinecone environment")
+  // .option("-a, --openAiApiKey <string>", "OPENAI API key")
   .option("-p, --pathDocs <string>", "Path of the documentation")
-  .option("-a, --openAiApiKey <string>", "OPENAI API key")
-  .action(async (options) => {
-    const { indexName, key, environment, pathDocs, openAiApiKey } = options;
+  .action(async (indexName, key, environment, openAiApiKey, options) => {
+    const { pathDocs } = options;
     const pineconeClient = new PineconeClient({});
     await pineconeClient.init({
       apiKey: key,
