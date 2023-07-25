@@ -26,6 +26,7 @@ async function startBot() {
     apiKey: pineconeApiKey,
     environment: pineconeEnvironment || "",
   });
+
   //The following try-catch can be deleted for prod version of the code, as handling the setup part is defined thanks to the cli.
   try {
     // Handle the setup command that sets up the Pinecone Index

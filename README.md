@@ -1,8 +1,10 @@
 # Discord Bot
 
+![What is Morpho?](https://cdn.morpho.org/images/morpho-gpt/what-is-morpho.png)
+
 ## Description
 
-This Discord bot was built to answer questions posed by users in a specific Discord channel. It uses [OpenAI's GPT-3](https://openai.com/research/gpt-3), [Pinecone](https://www.pinecone.io/), and [Langchain](https://langchain.io/) to process and answer questions. The bot embeds user questions, queries a Pinecone vector store for the most relevant documents, and then uses GPT-3 to generate an answer from those documents.
+This Discord bot was built to answer questions posed by users in a specific Discord channel. It uses [OpenAI's GPT-3.5](https://platform.openai.com/docs/api-reference), [Pinecone](https://www.pinecone.io/), and [Langchain](https://langchain.io/) to process and answer questions. The bot embeds user questions, queries a Pinecone vector store for the most relevant documents, and then uses GPT-3.5 to generate an answer from those documents.
 
 The bot relies on a repository of .txt and .md files that contain the knowledge base used to answer questions. Each of these files start with a link and a title in the two first lines of the document.
 For example:
@@ -15,12 +17,14 @@ These two lines are used for display purposes in Discord. The bot uses the text 
 
 ## Project Structure
 
-The project is divided into four main TypeScript files:
+The core of the project is divided into four main TypeScript files in the `./src` folder.:
 
 - `bot.ts`: Initializes the Discord bot and handles command interactions.
 - `utils.ts`: Contains utility functions for querying and updating the Pinecone vector store.
 - `setup/routeDiscord.ts`: Handles the setup of the Pinecone Index, loading documents from a specific directory.
 - `read/routeDiscord.ts`: Handles the read commands from the Discord chat.
+
+Add to that the cli commands that are helpful for the github action: whenever a new doc is removed/added/modified from the documents repository, there is an update in the related index.
 
 ## Setup
 
