@@ -16,6 +16,6 @@
     "langchain": "^0.0.90"
   },
   "bin": {
-    "morpho-gpt-cli": "./cli/cli.js"
+    "morpho-gpt-cli": "./dist/cli/cli.js"
   }
 }

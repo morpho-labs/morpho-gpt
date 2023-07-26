@@ -36,17 +36,63 @@ require("dotenv/config");
 const discord_js_1 = __importStar(require("discord.js"));
 const routeDiscord_1 = require("./read/routeDiscord");
 const routeDiscord_2 = require("./setup/routeDiscord");
-const pinecone_1 = require("@pinecone-database/pinecone");
+const pinecone_1 = require("./services/pinecone");
+/**
+ * A map to track each user's quota.
+ * @type {Record<string, { count: number; resetAt: number }>}
+ */
+const userQuotaMap = {};
+/**
+ * Checks whether a user has exceeded their quota.
+ * @param {string} userId - The ID of the user to check.
+ * @returns {boolean} - Returns true if the user is within their quota, false otherwise.
+ */
+function checkQuota(userId) {
+    const userQuota = userQuotaMap[userId];
+    const currentTime = Date.now();
+    const quotaPerMinute = 5;
+    if (!userQuota || currentTime >= userQuota.resetAt) {
+        userQuotaMap[userId] = { count: 1, resetAt: currentTime + 60000 };
+        return true;
+    }
+    if (userQuota.count >= quotaPerMinute) {
+        return false;
+    }
+    userQuota.count += 1;
+    return true;
+}
+/**
+ * Handles a message from a user.
+ * @param {Message} message - The message from the user.
+ * @param {PineconeClient} pineconeClient - The Pinecone client.
+ * @param {string} pineconeTestIndex - The Pinecone test index.
+ * @param {string} openAIApiKey - The OpenAI API key.
+ */
+function handleMessage(message, pineconeClient, pineconeTestIndex, openAIApiKey) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const question = message.content.replace("/question", "").trim();
+            yield message.channel.send("Morpho GPT is thinking...\n" +
+                "\n*Reminder: I am still learning so my answers may be inaccurate.*");
+            yield (0, routeDiscord_1.handleReadCommand)(message, question, pineconeClient, pineconeTestIndex, openAIApiKey);
+        }
+        catch (error) {
+            console.error(`Failed to send a reply: ${error}`);
+        }
+    });
+}
+/**
+ * Starts the bot.
+ */
 function startBot() {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
         const discordApiKey = process.env.DISCORD_API_KEY;
-        const openAiApiKey = process.env.OPENAI_API_KEY;
+        const openAIApiKey = process.env.OPENAI_API_KEY;
         const specificChannelId = process.env.SPECIFIC_CHANNEL_ID || "";
         const pineconeTestIndex = process.env.PINECONE_TEST_INDEX;
         const pineconeApiKey = (_a = process.env.PINECONE_API_KEY) !== null && _a !== void 0 ? _a : "";
         const pineconeEnvironment = process.env.PINECONE_ENVIRONMENT || "";
-        // Create a new Discord client with the necessary intents
         const discordClient = new discord_js_1.default.Client({
             intents: [
                 discord_js_1.GatewayIntentBits.Guilds,
@@ -54,59 +100,31 @@ function startBot() {
                 discord_js_1.GatewayIntentBits.GuildMessages,
             ],
         });
-        // Create a new Pinecone client
-        const pineconeClient = new pinecone_1.PineconeClient();
-        // Initialize the Pinecone client with the API key and environment
-        yield pineconeClient.init({
+        const pineconeClient = (0, pinecone_1.createPineconeClient)({
             apiKey: pineconeApiKey,
-            environment: pineconeEnvironment || "",
+            environment: pineconeEnvironment,
         });
-        //The following try-catch can be deleted for prod version of the code, as handling the setup part is defined thanks to the cli.
         try {
-            // Handle the setup command that sets up the Pinecone Index
-            yield (0, routeDiscord_2.handleSetupCommand)(pineconeClient, pineconeTestIndex, openAiApiKey);
+            yield (0, routeDiscord_2.handleSetupCommand)(pineconeClient, pineconeTestIndex);
         }
         catch (error) {
             console.error(`Failed to setup Pinecone Index: ${error}`);
         }
-        // Store the timestamp of the last question asked
-        let lastQuestionTime = 0;
-        const questionCooldown = 30000;
-        // Event listener for the "messageCreate" event
         discordClient.on(discord_js_1.Events.MessageCreate, (message) => __awaiter(this, void 0, void 0, function* () {
-            // Ignore messages from bots
             if (message.author.bot)
                 return;
             if (message.channelId !== specificChannelId)
                 return;
-            // Respond to commands starting with "/question"
             if (message.content.startsWith("/question")) {
-                try {
-                    const currentTime = Date.now();
-                    const timeDiff = currentTime - lastQuestionTime;
-                    // If the cooldown period has not passed, inform the user to wait
-                    if (timeDiff < questionCooldown) {
-                        yield message.channel.send("Too many questions in a short time. Try again in " +
-                            Math.ceil((questionCooldown - timeDiff) / 1000) +
-                            " seconds.");
-                        return;
-                    }
-                    const question = message.content.replace("/question", "").trim();
-                    yield message.channel.send("Morpho GPT is thinking...\n" +
-                        "\n*Reminder: I am still learning so my answers may be inaccurate.*");
-                    // Handle the read command that retrieves the answer from the Pinecone Index and responds
-                    yield (0, routeDiscord_1.handleReadCommand)(message, question, pineconeClient, pineconeTestIndex);
-                    // Update the last question time
-                    lastQuestionTime = currentTime;
+                if (checkQuota(message.author.id)) {
+                    yield handleMessage(message, pineconeClient, pineconeTestIndex, openAIApiKey);
                 }
-                catch (error) {
-                    console.error(`Failed to send a reply: ${error}`);
+                else {
+                    yield message.channel.send("You have reached the maximum number of 5 questions per minute. Please wait a moment before asking again.");
                 }
             }
         }));
-        // Log in to Discord with your app's token
         discordClient.login(discordApiKey);
     });
 }
-// Start the bot aka main
 startBot();

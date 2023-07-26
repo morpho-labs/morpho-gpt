@@ -1,21 +1,41 @@
 import "dotenv/config";
 import { PineconeClient } from "@pinecone-database/pinecone";
 import { Message } from "discord.js";
-import { queryPineconeVectorStoreAndQueryLLM } from "../utils";
+import {
+  queryPineconeVectorStore,
+  formatPineconeResponse,
+  queryLanguageModelWithPineconeResponse,
+} from "../services/pinecone";
 
-// Function to handle the read command
+/**
+ * Handles the read command.
+ * Queries Pinecone vector store and OpenAI model to answer a question, then sends the response to a Discord channel.
+ * @param {Message} message - The message instance from the Discord.js client.
+ * @param {string} question - The question to be answered.
+ * @param {PineconeClient} pineconeClient - The Pinecone client instance.
+ * @param {string} pineconeTestIndex - The name of the Pinecone index.
+ * @param {string} openAIApiKey - The API key for the OpenAI model.
+ * @async
+ */
 export async function handleReadCommand(
   message: Message,
   question: string,
   pineconeClient: PineconeClient,
-  pineconeTestIndex: string
+  pineconeTestIndex: string,
+  openAIApiKey: string
 ) {
   try {
     // Query Pinecone vector store and retrieve answer and document links
-    const result = await queryPineconeVectorStoreAndQueryLLM(
+    const pineconeResponse = await queryPineconeVectorStore(
       pineconeClient,
       pineconeTestIndex,
       question
+    );
+    const formattedResponse = formatPineconeResponse(pineconeResponse);
+    const result = await queryLanguageModelWithPineconeResponse(
+      formattedResponse,
+      question,
+      openAIApiKey
     );
 
     if (result) {
@@ -27,9 +47,7 @@ export async function handleReadCommand(
 
       // Prepare a string that contains all the document links
       let linksString = documentLinks
-        .map(
-          (link: string, index: number) => `**Link ${index + 1}:** <${link}>`
-        )
+        .map((link, index) => `**Link ${index + 1}:** <${link}>`)
         .join("\n");
 
       // Send the answer and document links as a message to the Discord channel

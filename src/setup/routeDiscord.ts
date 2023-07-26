@@ -1,23 +1,18 @@
-import { TextLoader } from "langchain/document_loaders/fs/text";
-import { DirectoryLoader } from "langchain/document_loaders/fs/directory";
-import { createPineconeIndexIfNotExist, updatePineconeIndex } from "../utils";
+import { createPineconeIndexIfNotExist } from "../services/pinecone";
 import { PineconeClient } from "@pinecone-database/pinecone";
 
-// Function to handle the setup command
+/**
+ * Handles the setup command for Pinecone.
+ * Creates a Pinecone index with specified name and vector dimensions, if it doesn't exist already.
+ * @param {PineconeClient} pineconeClient - The Pinecone client instance.
+ * @param {string} pineconeTestIndex - The name of the Pinecone index.
+ * @returns {Promise<void>}
+ * @async
+ */
 export async function handleSetupCommand(
   pineconeClient: PineconeClient,
-  pineconeTestIndex: string,
-  openAiApiKey: string
+  pineconeTestIndex: string
 ): Promise<void> {
-  // Return a new promise that is resolved when the setup is complete
-  // Create a loader for documents in the `/documents` directory
-  const loader = new DirectoryLoader("./documents", {
-    // Load .txt and .md files using the TextLoader
-    ".txt": (path: any) => new TextLoader(path),
-    ".md": (path: any) => new TextLoader(path),
-  });
-
-  const docs = await loader.load();
   const VECTORDIMENSIONS = 1536;
   const TIMEOUT = 200000;
 
@@ -28,15 +23,5 @@ export async function handleSetupCommand(
     VECTORDIMENSIONS,
     TIMEOUT
   );
-
-  // Update the Pinecone index with the loaded documents
-  await updatePineconeIndex(
-    pineconeClient,
-    openAiApiKey,
-    pineconeTestIndex,
-    docs
-  );
-
-  // Log a success message
-  console.log("Index created and data loaded into Pinecone successfully.");
+  console.log("Index created");
 }

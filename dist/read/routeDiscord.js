@@ -11,13 +11,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleReadCommand = void 0;
 require("dotenv/config");
-const utils_1 = require("../utils");
-// Function to handle the read command
-function handleReadCommand(message, question, pineconeClient, pineconeTestIndex) {
+const pinecone_1 = require("../services/pinecone");
+/**
+ * Handles the read command.
+ * Queries Pinecone vector store and OpenAI model to answer a question, then sends the response to a Discord channel.
+ * @param {Message} message - The message instance from the Discord.js client.
+ * @param {string} question - The question to be answered.
+ * @param {PineconeClient} pineconeClient - The Pinecone client instance.
+ * @param {string} pineconeTestIndex - The name of the Pinecone index.
+ * @param {string} openAIApiKey - The API key for the OpenAI model.
+ * @async
+ */
+function handleReadCommand(message, question, pineconeClient, pineconeTestIndex, openAIApiKey) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             // Query Pinecone vector store and retrieve answer and document links
-            const result = yield (0, utils_1.queryPineconeVectorStoreAndQueryLLM)(pineconeClient, pineconeTestIndex, question);
+            const pineconeResponse = yield (0, pinecone_1.queryPineconeVectorStore)(pineconeClient, pineconeTestIndex, question);
+            const formattedResponse = (0, pinecone_1.formatPineconeResponse)(pineconeResponse);
+            const result = yield (0, pinecone_1.queryLanguageModelWithPineconeResponse)(formattedResponse, question, openAIApiKey);
             if (result) {
                 // Select the top 3 most probable distinct links
                 let distinctDocumentLinks = [
