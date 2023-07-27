@@ -46,13 +46,13 @@ program
 
     const timeout = getOptionOrEnv(options, "timeout", "", 200000);
 
-    const pineconeClient = createPineconeClient({
+    const pineconeClient = await createPineconeClient({
       apiKey: key,
       environment: environment,
     });
 
     await createPineconeIndexIfNotExist(
-      await pineconeClient,
+      pineconeClient,
       index,
       dimension,
       timeout
@@ -99,7 +99,7 @@ program
 
     const pathDocs = getOptionOrEnv(options, "pathDocs", "", null);
     exitIfNull(pathDocs, "Missing path for the documentation");
-    const pineconeClient = createPineconeClient({
+    const pineconeClient = await createPineconeClient({
       apiKey: key,
       environment: environment,
     });
@@ -109,7 +109,7 @@ program
     });
 
     const docs = await loader.load();
-    await updatePineconeIndex(await pineconeClient, openAIApiKey, index, docs);
+    await updatePineconeIndex(pineconeClient, openAIApiKey, index, docs);
   });
 
 program.parse(process.argv);

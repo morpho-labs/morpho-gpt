@@ -82,13 +82,13 @@ async function startBot() {
     ],
   });
 
-  const pineconeClient = createPineconeClient({
+  const pineconeClient = await createPineconeClient({
     apiKey: pineconeApiKey,
     environment: pineconeEnvironment,
   });
   console.log("Pinecone client created");
   try {
-    await handleSetupCommand(await pineconeClient, pineconeTestIndex!);
+    await handleSetupCommand(pineconeClient, pineconeTestIndex!);
   } catch (error) {
     console.error(`Failed to setup Pinecone Index: ${error}`);
   }
@@ -100,7 +100,7 @@ async function startBot() {
       if (checkQuota(message.author.id)) {
         await handleMessage(
           message,
-          await pineconeClient,
+          pineconeClient,
           pineconeTestIndex!,
           openAIApiKey!
         );
