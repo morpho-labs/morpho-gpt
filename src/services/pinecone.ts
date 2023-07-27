@@ -18,11 +18,11 @@ import {
  * @param {PineconeClientParams} params - The parameters to initialize the Pinecone client with.
  * @returns {PineconeClient} - The created and initialized Pinecone client.
  */
-export function createPineconeClient(
+export async function createPineconeClient(
   params: PineconeClientParams
-): PineconeClient {
+): Promise<PineconeClient> {
   const client = new PineconeClient();
-  client.init(params);
+  await client.init(params);
   return client;
 }
 

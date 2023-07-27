@@ -13,9 +13,6 @@ export async function handleSetupCommand(
   pineconeClient: PineconeClient,
   pineconeTestIndex: string
 ): Promise<void> {
-  const VECTORDIMENSIONS = 1536;
-  const TIMEOUT = 200000;
-
   // Check if the index exists and throw an error if it doesn't
   const existingIndexes = await pineconeClient.listIndexes();
 

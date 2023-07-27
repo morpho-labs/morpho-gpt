@@ -86,9 +86,9 @@ async function startBot() {
     apiKey: pineconeApiKey,
     environment: pineconeEnvironment,
   });
-
+  console.log("Pinecone client created");
   try {
-    await handleSetupCommand(pineconeClient, pineconeTestIndex!);
+    await handleSetupCommand(await pineconeClient, pineconeTestIndex!);
   } catch (error) {
     console.error(`Failed to setup Pinecone Index: ${error}`);
   }
@@ -100,7 +100,7 @@ async function startBot() {
       if (checkQuota(message.author.id)) {
         await handleMessage(
           message,
-          pineconeClient,
+          await pineconeClient,
           pineconeTestIndex!,
           openAIApiKey!
         );
