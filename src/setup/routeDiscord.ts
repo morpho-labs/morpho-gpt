@@ -1,42 +1,24 @@
-import { TextLoader } from "langchain/document_loaders/fs/text";
-import { DirectoryLoader } from "langchain/document_loaders/fs/directory";
-import { createPineconeIndexIfNotExist, updatePineconeIndex } from "../utils";
 import { PineconeClient } from "@pinecone-database/pinecone";
 
-// Function to handle the setup command
+/**
+ * Handles the setup command for Pinecone.
+ * Checks if a Pinecone index with the specified name exists.
+ * Throws an error if it doesn't exist.
+ * @param {PineconeClient} pineconeClient - The Pinecone client instance.
+ * @param {string} pineconeTestIndex - The name of the Pinecone index.
+ * @returns {Promise<void>}
+ * @async
+ */
 export async function handleSetupCommand(
   pineconeClient: PineconeClient,
-  pineconeTestIndex: string,
-  openAiApiKey: string
+  pineconeTestIndex: string
 ): Promise<void> {
-  // Return a new promise that is resolved when the setup is complete
-  // Create a loader for documents in the `/documents` directory
-  const loader = new DirectoryLoader("./documents", {
-    // Load .txt and .md files using the TextLoader
-    ".txt": (path: any) => new TextLoader(path),
-    ".md": (path: any) => new TextLoader(path),
-  });
+  // Check if the index exists and throw an error if it doesn't
+  const existingIndexes = await pineconeClient.listIndexes();
 
-  const docs = await loader.load();
-  const VECTORDIMENSIONS = 1536;
-  const TIMEOUT = 200000;
+  if (!existingIndexes.includes(pineconeTestIndex)) {
+    throw new Error(`Pinecone index ${pineconeTestIndex} does not exist.`);
+  }
 
-  // Create a Pinecone index with the specified name and vector dimensions
-  await createPineconeIndexIfNotExist(
-    pineconeClient,
-    pineconeTestIndex,
-    VECTORDIMENSIONS,
-    TIMEOUT
-  );
-
-  // Update the Pinecone index with the loaded documents
-  await updatePineconeIndex(
-    pineconeClient,
-    openAiApiKey,
-    pineconeTestIndex,
-    docs
-  );
-
-  // Log a success message
-  console.log("Index created and data loaded into Pinecone successfully.");
+  console.log("Index exists");
 }

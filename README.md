@@ -21,10 +21,11 @@ The core of the project is divided into four main TypeScript files in the `./src
 
 - `bot.ts`: Initializes the Discord bot and handles command interactions.
 - `utils.ts`: Contains utility functions for querying and updating the Pinecone vector store.
-- `setup/routeDiscord.ts`: Handles the setup of the Pinecone Index, loading documents from a specific directory.
+- `setup/routeDiscord.ts`: Handles the setup of the Pinecone Index by creating an index if it does not exist.
 - `read/routeDiscord.ts`: Handles the read commands from the Discord chat.
-
-Add to that the cli commands that are helpful for the github action: whenever a new doc is removed/added/modified from the documents repository, there is an update in the related index.
+- `cli/cli.ts`: Handles the cli commands to monitor thanks to the workflow action.
+- `services/interfaces.ts`: Handling the interfaces.
+- `services/pinecone.ts`: Handling pinecone related functions.
 
 ## Setup
 
