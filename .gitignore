@@ -7,11 +7,11 @@ node_modules
 # Ignore .env file
 .env
 
+# Ignore dist folder
+dist
+
 # Ignore local git repository
 .git
 
 # Ignore tsconfig.tsbuildinfo
 tsconfig.tsbuildinfo
-
-# Ignore dist folder
-dist

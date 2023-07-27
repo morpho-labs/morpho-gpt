@@ -1,9 +1,9 @@
-import { createPineconeIndexIfNotExist } from "../services/pinecone";
 import { PineconeClient } from "@pinecone-database/pinecone";
 
 /**
  * Handles the setup command for Pinecone.
- * Creates a Pinecone index with specified name and vector dimensions, if it doesn't exist already.
+ * Checks if a Pinecone index with the specified name exists.
+ * Throws an error if it doesn't exist.
  * @param {PineconeClient} pineconeClient - The Pinecone client instance.
  * @param {string} pineconeTestIndex - The name of the Pinecone index.
  * @returns {Promise<void>}
@@ -16,12 +16,12 @@ export async function handleSetupCommand(
   const VECTORDIMENSIONS = 1536;
   const TIMEOUT = 200000;
 
-  // Create a Pinecone index with the specified name and vector dimensions
-  await createPineconeIndexIfNotExist(
-    pineconeClient,
-    pineconeTestIndex,
-    VECTORDIMENSIONS,
-    TIMEOUT
-  );
-  console.log("Index created");
+  // Check if the index exists and throw an error if it doesn't
+  const existingIndexes = await pineconeClient.listIndexes();
+
+  if (!existingIndexes.includes(pineconeTestIndex)) {
+    throw new Error(`Pinecone index ${pineconeTestIndex} does not exist.`);
+  }
+
+  console.log("Index exists");
 }

@@ -8,6 +8,7 @@ import {
   createPineconeIndexIfNotExist,
   updatePineconeIndex,
 } from "../services/pinecone";
+import { getOptionOrEnv, exitIfNull } from "../services/cli";
 
 program.version("0.0.1");
 
@@ -23,47 +24,27 @@ program
   .option("-e, --environment <string>", "Pinecone environment")
   .option("-t, --timeout <number>", "set the timeout duration")
   .action(async (options: any) => {
-    const index =
-      "index" in options &&
-      typeof options.indexName === "string" &&
-      options.index !== ""
-        ? options.index
-        : process.env.PINECONE_TEST_INDEX ?? "test-index"; //value by default
+    const index = getOptionOrEnv(
+      options,
+      "index",
+      "PINECONE_TEST_INDEX",
+      "test-index"
+    );
 
-    const dimension =
-      "dimension" in options &&
-      typeof options.dimension === "number" &&
-      options.dimension !== ""
-        ? options.dimension
-        : 1536; //value by default
+    const dimension = getOptionOrEnv(options, "dimension", "", 1536);
 
-    const key =
-      "key" in options && typeof options.key === "string" && options.key !== ""
-        ? options.key ?? process.env.PINECONE_API_KEY
-        : null;
+    const key = getOptionOrEnv(options, "key", "PINECONE_API_KEY", null);
+    exitIfNull(key, "Missing Pinecone API key");
 
-    if (!key) {
-      console.error("Missing Pinecone API key");
-      process.exit(1);
-    }
-    const environment =
-      "environment" in options &&
-      typeof options.environment === "string" &&
-      options.environment !== ""
-        ? options.environment ?? process.env.PINECONE_ENVIRONMENT
-        : null;
+    const environment = getOptionOrEnv(
+      options,
+      "environment",
+      "PINECONE_ENVIRONMENT",
+      null
+    );
+    exitIfNull(environment, "Missing Pinecone Environment");
 
-    if (!environment) {
-      console.error("Missing Pinecone Environment");
-      process.exit(1);
-    }
-
-    const timeout =
-      "timeout" in options &&
-      typeof options.timeout === "number" &&
-      options.timeout !== ""
-        ? options.timeout
-        : 200000; //value by default
+    const timeout = getOptionOrEnv(options, "timeout", "", 200000);
 
     const pineconeClient = createPineconeClient({
       apiKey: key,
@@ -90,60 +71,40 @@ program
   .option("-a, --openAIApiKey <string>", "OPENAI API key")
   .option("-p, --pathDocs <string>", "Path of the documentation")
   .action(async (options: any) => {
-    const index =
-      "index" in options &&
-      typeof options.indexName === "string" &&
-      options.index !== ""
-        ? options.index
-        : process.env.PINECONE_TEST_INDEX ?? "test-index"; //value by default
+    const index = getOptionOrEnv(
+      options,
+      "index",
+      "PINECONE_TEST_INDEX",
+      "test-index"
+    );
 
-    const key =
-      "key" in options && typeof options.key === "string" && options.key !== ""
-        ? options.key ?? process.env.PINECONE_API_KEY
-        : null;
+    const key = getOptionOrEnv(options, "key", "PINECONE_API_KEY", null);
+    exitIfNull(key, "Missing Pinecone API key");
 
-    if (!key) {
-      console.error("Missing Pinecone API key");
-      process.exit(1);
-    }
-    const environment =
-      "environment" in options &&
-      typeof options.environment === "string" &&
-      options.environment !== ""
-        ? options.environment ?? process.env.PINECONE_ENVIRONMENT
-        : null;
+    const environment = getOptionOrEnv(
+      options,
+      "environment",
+      "PINECONE_ENVIRONMENT",
+      null
+    );
+    exitIfNull(environment, "Missing Pinecone Environment");
 
-    if (!environment) {
-      console.error("Missing Pinecone Environment");
-      process.exit(1);
-    }
-    const openAIApiKey =
-      "openAIApiKey" in options &&
-      typeof options.openAIApiKeyy === "string" &&
-      options.openAIApiKey !== ""
-        ? options.openAIApiKey ?? process.env.OPENAI_API_KEY
-        : null;
+    const openAIApiKey = getOptionOrEnv(
+      options,
+      "openAIApiKey",
+      "OPENAI_API_KEY",
+      null
+    );
+    exitIfNull(openAIApiKey, "Missing OPENAI API key");
 
-    if (!openAIApiKey) {
-      console.error("Missing OPENAI API key");
-      process.exit(1);
-    }
-    const pathDocs =
-      "pathDocs" in options &&
-      typeof options.pathDocs === "string" &&
-      options.pathDocs !== ""
-        ? options.pathDocs
-        : null;
-
-    if (!pathDocs) {
-      console.error("Missing path for the documentation");
-      process.exit(1);
-    }
+    const pathDocs = getOptionOrEnv(options, "pathDocs", "", null);
+    exitIfNull(pathDocs, "Missing path for the documentation");
 
     const pineconeClient = createPineconeClient({
       apiKey: key,
       environment: environment,
     });
+
     const loader = new DirectoryLoader(pathDocs, {
       ".txt": (path: string) => new TextLoader(path),
       ".md": (path: string) => new TextLoader(path),

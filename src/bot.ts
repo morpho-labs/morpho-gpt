@@ -69,10 +69,10 @@ async function handleMessage(
 async function startBot() {
   const discordApiKey = process.env.DISCORD_API_KEY;
   const openAIApiKey = process.env.OPENAI_API_KEY;
-  const specificChannelId = process.env.SPECIFIC_CHANNEL_ID || "";
+  const specificChannelId = process.env.SPECIFIC_CHANNEL_ID ?? "";
   const pineconeTestIndex = process.env.PINECONE_TEST_INDEX;
   const pineconeApiKey = process.env.PINECONE_API_KEY ?? "";
-  const pineconeEnvironment = process.env.PINECONE_ENVIRONMENT || "";
+  const pineconeEnvironment = process.env.PINECONE_ENVIRONMENT ?? "";
 
   const discordClient = new Discord.Client({
     intents: [
