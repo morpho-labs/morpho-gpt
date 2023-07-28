@@ -20,12 +20,12 @@ These two lines are used for display purposes in Discord. The bot uses the text 
 The core of the project is divided into four main TypeScript files in the `./src` folder.:
 
 - `bot.ts`: Initializes the Discord bot and handles command interactions.
-- `setup/routeDiscord.ts`: Handles the setup of the Pinecone Index by creating an index if it does not exist.
 - `read/routeDiscord.ts`: Handles the read commands from the Discord chat.
+- `setup/routeDiscord.ts`: Handles the setup check of the Pinecone index.
 - `cli/cli.ts`: Handles the cli commands to monitor thanks to the workflow action.
 - `services/interfaces.ts`: Handling the interfaces.
 - `services/pinecone.ts`: Handling pinecone related functions.
-- `services/cli.ts`: Handling pinecone related functions.
+- `services/cli.ts`: Handling cli related commands.
 
 ## Setup
 
