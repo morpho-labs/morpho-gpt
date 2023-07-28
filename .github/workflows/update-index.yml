@@ -25,16 +25,16 @@ jobs:
         run: npm run build
 
       - name: Create index
-        run: npx morpho-gpt-cli create-index --index PINECONE_TEST_INDEX --dimension 1536 --key PINECONE_API_KEY  --environment PINECONE_ENVIRONMENT --timeout 200000
+        run: npx morpho-gpt-cli create-index --dimension 1536 --timeout 200000
         env:
-          PINECONE_TEST_INDEX: ${{ secrets.PINECONE_TEST_INDEX }}
+          PINECONE_INDEX: ${{ secrets.PINECONE_INDEX }}
           PINECONE_API_KEY: ${{ secrets.PINECONE_API_KEY }}
           PINECONE_ENVIRONMENT: ${{ secrets.PINECONE_ENVIRONMENT }}
 
       - name: Update index
-        run: npx morpho-gpt-cli update-index --index PINECONE_TEST_INDEX --key PINECONE_API_KEY  --environment PINECONE_ENVIRONMENT --openAIApiKey OPENAI_API_KEY --pathDocs "./documents"
+        run: npx morpho-gpt-cli update-index --pathDocs "./documents"
         env:
-          PINECONE_TEST_INDEX: ${{ secrets.PINECONE_TEST_INDEX }}
+          PINECONE_INDEX: ${{ secrets.PINECONE_INDEX }}
           PINECONE_API_KEY: ${{ secrets.PINECONE_API_KEY }}
           PINECONE_ENVIRONMENT: ${{ secrets.PINECONE_ENVIRONMENT }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}

@@ -27,14 +27,14 @@ program
     const index = getOptionOrEnv(
       options,
       "index",
-      "PINECONE_TEST_INDEX",
+      "PINECONE_INDEX",
       "test-index"
     );
 
     const dimension = getOptionOrEnv(options, "dimension", "", 1536);
 
     const key = getOptionOrEnv(options, "key", "PINECONE_API_KEY", null);
-    exitIfNull(key, "Missing Pinecone API key");
+    exitIfNull(key, "Missing Pinecone API key");
 
     const environment = getOptionOrEnv(
       options,
@@ -74,7 +74,7 @@ program
     const index = getOptionOrEnv(
       options,
       "index",
-      "PINECONE_TEST_INDEX",
+      "PINECONE_INDEX",
       "test-index"
     );
 
