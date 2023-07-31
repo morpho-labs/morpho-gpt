@@ -47,7 +47,7 @@ To run this project, you need the following:
    npm install
    ```
 
-3. Create a .env file in the root directory of the project and populate it with your API keys:
+3. Create a .env file in the root directory of the project and populate it with your API keys and the name of the env & index on pinecone:
 
    OPENAI_API_KEY=your_openai_api_key
    PINECONE_API_KEY=your_pinecone_api_key
