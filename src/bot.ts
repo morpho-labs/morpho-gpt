@@ -7,14 +7,13 @@ import { createPineconeClient } from "./services/pinecone";
 
 /**
  * A map to track each user's quota.
- * @type {Record<string, { count: number; resetAt: number }>}
  */
 const userQuotaMap: Record<string, { count: number; resetAt: number }> = {};
 
 /**
  * Checks whether a user has exceeded their quota.
- * @param {string} userId - The ID of the user to check.
- * @returns {boolean} - Returns true if the user is within their quota, false otherwise.
+ * @param userId - The ID of the user to check.
+ * @returns Returns true if the user is within their quota, false otherwise.
  */
 function checkQuota(userId: string): boolean {
   const userQuota = userQuotaMap[userId];
@@ -33,10 +32,10 @@ function checkQuota(userId: string): boolean {
 
 /**
  * Handles a message from a user.
- * @param {Message} message - The message from the user.
- * @param {PineconeClient} pineconeClient - The Pinecone client.
- * @param {string} pineconeTestIndex - The Pinecone test index.
- * @param {string} openAIApiKey - The OpenAI API key.
+ * @param message - The message from the user.
+ * @param pineconeClient - The Pinecone client.
+ * @param pineconeTestIndex - The Pinecone test index.
+ * @param openAIApiKey - The OpenAI API key.
  */
 async function handleMessage(
   message: Message,
@@ -112,7 +111,7 @@ async function startBot() {
     }
   });
 
-  discordClient.login(discordApiKey);
+  await discordClient.login(discordApiKey);
 }
 
 startBot();

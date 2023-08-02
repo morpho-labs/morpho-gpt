@@ -10,20 +10,19 @@ import {
 /**
  * Handles the read command.
  * Queries Pinecone vector store and OpenAI model to answer a question, then sends the response to a Discord channel.
- * @param {Message} message - The message instance from the Discord.js client.
- * @param {string} question - The question to be answered.
- * @param {PineconeClient} pineconeClient - The Pinecone client instance.
- * @param {string} pineconeTestIndex - The name of the Pinecone index.
- * @param {string} openAIApiKey - The API key for the OpenAI model.
- * @async
+ * @param message - The message instance from the Discord.js client.
+ * @param question - The question to be answered.
+ * @param pineconeClient - The Pinecone client instance.
+ * @param pineconeTestIndex - The name of the Pinecone index.
+ * @param openAIApiKey - The API key for the OpenAI model.
  */
-export async function handleReadCommand(
+export const handleReadCommand = async (
   message: Message,
   question: string,
   pineconeClient: PineconeClient,
   pineconeTestIndex: string,
   openAIApiKey: string
-) {
+) => {
   try {
     // Query Pinecone vector store and retrieve answer and document links
     const pineconeResponse = await queryPineconeVectorStore(
