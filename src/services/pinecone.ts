@@ -15,12 +15,12 @@ import {
 
 /**
  * Creates a new Pinecone client and initializes it with the given parameters.
- * @param {PineconeClientParams} params - The parameters to initialize the Pinecone client with.
- * @returns {PineconeClient} - The created and initialized Pinecone client.
+ * @param  params - The parameters to initialize the Pinecone client with.
+ * @returns - The created and initialized Pinecone client.
  */
-export async function createPineconeClient(
+export const createPineconeClient = async (
   params: PineconeClientParams
-): Promise<PineconeClient> {
+) => {
   const client = new PineconeClient();
   await client.init(params);
   return client;
@@ -28,16 +28,16 @@ export async function createPineconeClient(
 
 /**
  * Queries the Pinecone vector store with a given question, returning the store's response.
- * @param {PineconeClient} client - The Pinecone client to use for querying.
- * @param {string} indexName - The name of the index to query.
- * @param {string} question - The question to embed and query the vector store with.
- * @returns {Promise<PineconeQueryResponse>} - The response from the Pinecone vector store.
+ * @param client - The Pinecone client to use for querying.
+ * @param indexName - The name of the index to query.
+ * @param question - The question to embed and query the vector store with.
+ * @returns - The response from the Pinecone vector store.
  */
 export const queryPineconeVectorStore = async (
   client: PineconeClient,
   indexName: string,
   question: string
-): Promise<PineconeQueryResponse> => {
+) => {
   console.log("Querying Pinecone vector store...");
   const index = client.Index(indexName);
   const queryEmbedding = await new OpenAIEmbeddings().embedQuery(question);
@@ -55,12 +55,12 @@ export const queryPineconeVectorStore = async (
 
 /**
  * Formats the response from a Pinecone query to match the QueryResponse interface.
- * @param {PineconeQueryResponse} pineconeResponse - The original response from the Pinecone query.
- * @returns {QueryResponse} - The formatted query response.
+ * @param pineconeResponse - The original response from the Pinecone query.
+ * @returns - The formatted query response.
  */
 export const formatPineconeResponse = (
   pineconeResponse: PineconeQueryResponse
-): QueryResponse => {
+) => {
   let queryResponse: QueryResponse = {
     matches: pineconeResponse.matches?.map((match) => {
       if (
@@ -88,10 +88,10 @@ export const formatPineconeResponse = (
 
 /**
  * Queries a language model with the response from a Pinecone query and a question, returning the model's answer.
- * @param {QueryResponse} queryResponse - The formatted response from the Pinecone query.
- * @param {string} question - The question to ask the language model.
- * @param {string} openAIApiKey - The API key to use for the OpenAI language model.
- * @returns {Promise<{answer: string, documentLinks: string[]}>} - The model's answer and the document links.
+ * @param queryResponse - The formatted response from the Pinecone query.
+ * @param question - The question to ask the language model.
+ * @param openAIApiKey - The API key to use for the OpenAI language model.
+ * @returns - The model's answer and the document links.
  */
 export const queryLanguageModelWithPineconeResponse = async (
   queryResponse: QueryResponse,
@@ -128,11 +128,10 @@ export const queryLanguageModelWithPineconeResponse = async (
 
 /**
  * Creates a Pinecone index with a given name if it does not already exist.
- * @param {PineconeClient} client - The Pinecone client to use for index management.
- * @param {string} indexName - The name of the index to create.
- * @param {number} vectorDimension - The dimensionality of the vector for the index.
- * @param {number} timeout - The timeout in milliseconds to wait for the index to initialize.
- * @returns {Promise<void>}
+ * @param client - The Pinecone client to use for index management.
+ * @param indexName - The name of the index to create.
+ * @param vectorDimension - The dimensionality of the vector for the index.
+ * @param timeout - The timeout in milliseconds to wait for the index to initialize.
  */
 export const createPineconeIndexIfNotExist = async (
   client: PineconeClient,
@@ -169,14 +168,13 @@ export const createPineconeIndexIfNotExist = async (
 
 /**
  * Process a single document and return the vectors to be upserted.
- * @param {Document} doc - The document to process.
- * @param {string} openAIApiKey - The API key to use for the OpenAI language model.
- * @returns {Promise<Vector[]>}
+ * @param doc - The document to process.
+ * @param openAIApiKey - The API key to use for the OpenAI language model.
  */
 const processDocument = async (
   doc: Document,
   openAIApiKey: string
-): Promise<Vector[]> => {
+) => {
   const txtPath = await doc.metadata.source;
   const text = doc.pageContent;
 
@@ -202,19 +200,18 @@ const processDocument = async (
       txtPath: txtPath,
       docLink: documentLink,
     },
-  }));
+  }) as Vector);
 };
 
 /**
  * Upserts batches of vectors to a Pinecone index.
- * @param {Index} index - The Pinecone index to update.
- * @param {Vector[]} vectors - The vectors to upsert.
- * @returns {Promise<void>}
+ * @param index - The Pinecone index to update.
+ * @param vectors - The vectors to upsert.
  */
 const upsertVectors = async (
   index: VectorOperationsApi,
   vectors: Vector[]
-): Promise<void> => {
+) => {
   const batchSize = 100;
   for (let i = 0; i < vectors.length; i += batchSize) {
     const batch = vectors.slice(i, i + batchSize);
@@ -224,18 +221,17 @@ const upsertVectors = async (
 
 /**
  * Updates a Pinecone index with new vectors created from the provided documents.
- * @param {PineconeClient} client - The Pinecone client to use for index management.
- * @param {string} openAIApiKey - The API key to use for the OpenAI language model.
- * @param {string} indexName - The name of the index to update.
- * @param {Document[]} docs - The documents to use for creating vectors.
- * @returns {Promise<void>}
+ * @param client - The Pinecone client to use for index management.
+ * @param openAIApiKey - The API key to use for the OpenAI language model.
+ * @param indexName - The name of the index to update.
+ * @param docs - The documents to use for creating vectors.
  */
 export const updatePineconeIndex = async (
   client: PineconeClient,
   openAIApiKey: string,
   indexName: string,
   docs: Document[]
-): Promise<void> => {
+) => {
   const index = client.Index(indexName);
 
   for (const [i, doc] of docs.entries()) {
