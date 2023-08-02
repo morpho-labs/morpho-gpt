@@ -112,7 +112,7 @@ async function startBot() {
     }
   });
 
-  discordClient.login(discordApiKey);
+  await discordClient.login(discordApiKey);
 }
 
 startBot();
