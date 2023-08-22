@@ -45,6 +45,7 @@ To run this project, you need the following:
 
    ```bash
    npm install
+   npm run build
    ```
 
 3. Create a .env file in the root directory of the project and populate it with your API keys and the name of the env & index on pinecone:
@@ -57,10 +58,16 @@ To run this project, you need the following:
 - DISCORD_API_KEY=your_discord_key
 - SPECIFIC_CHANNEL_ID=your_specific_channel
   ```
+4. Update Pinecone index
+   
+   ```bash
 
-4. Start the bot:
+   npx morpho-gpt-cli update-index --key PINECONE_API_KEY --environment PINECONE_ENVIRONMENT --index PINECONE_INDEX --openAIApiKey OPENAI_API_KEY --pathDocs "./documents"
+   ```
+5. Start the bot:
 
    ```bash
+
    npm run start
    ```
 
@@ -74,13 +81,13 @@ The bot will then compute an answer and respond in the channel. The bot's respon
 
 ## Docker Deployment
 
-5. Build the Docker image:
+6. Build the Docker image:
 
 ```bash
    docker build -t my-discord-bot .
 ```
 
-6. Run the Docker container:
+7. Run the Docker container:
 
 ```bash
 docker run -d -p 8080:8080 --env-file ./.env my-discord-bot
