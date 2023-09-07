@@ -1,4 +1,5 @@
-Link: https://morpho.mirror.xyz/SPE6RFIm3HzjkZSF_RW7ikAFkumxHT1PoLGIHPXYaIQ Title: Introducing Morpho
+Link: https://morpho.mirror.xyz/SPE6RFIm3HzjkZSF_RW7ikAFkumxHT1PoLGIHPXYaIQ
+Title: Introducing Morpho
 
 Hi everyone! We are Morpho Labs, a software development company committed to bootstrapping, developing, and decentralizing the Morpho protocol.
 
