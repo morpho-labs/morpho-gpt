@@ -1,4 +1,5 @@
-Link: https://medium.com/morpho-labs/morpho-the-best-of-two-worlds-1d8b641b8393 Title: Morpho: the best of two worlds.
+Link: https://medium.com/morpho-labs/morpho-the-best-of-two-worlds-1d8b641b8393
+Title: Morpho: the best of two worlds.
 
 Limitations of past and current lending systems.
 In the first article (https://medium.com/morpho-labs/lending-pools-an-imperfect-breakthrough-357962c34364), we saw that lending protocols with a pool-to-peer design provide instant liquidity and allow for the fungibility of loans. However, it comes at the cost of capital efficiency which generates a spread between borrowing and lending (few lenders, many borrowers). Moreover, in order for the market to remain fully liquid, a lot of capital has to constantly sits idle. This is incentivized with algorithmically designed (and thus constrained) rates. Despite those limitations, peer-to-pool has gained a lot of traction in the past years.
