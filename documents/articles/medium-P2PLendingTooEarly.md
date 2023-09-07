@@ -1,5 +1,9 @@
 Link: https://medium.com/morpho-labs/peer-to-peer-lending-too-early-to-work-the-ethlend-case-6b50e1234ec6
-Title: Peer-to-peer lending: too early to work? — The ETHLend case.
+Title: The ETHLend case Article
+
+Peer-to-peer lending: too early to work? — The ETHLend case.
+87 February 2022
+Mathieu Courtois
 
 Lending protocols are one of the main primitives of DeFi but lending pools have only been around for a couple of years. Before that, during the infancy of DeFi, protocols on Ethereum have tried and tested other approaches. ETHLend was one of them.
 Launched in 2017, ETHLend offered peer-to-peer lending and even if it was not the only protocol that offered such service, it was one of the main ones. However, ETHLend never really gained enough traction and in September 2018, less than 2 years after its launch, it was integrated into a new parent company: Aave.
