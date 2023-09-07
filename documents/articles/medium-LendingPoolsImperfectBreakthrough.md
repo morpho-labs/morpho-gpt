@@ -1,4 +1,5 @@
-Link: https://medium.com/morpho-labs/lending-pools-an-imperfect-breakthrough-357962c34364 Title: Lending pools: an imperfect breakthrough.
+Link: https://medium.com/morpho-labs/lending-pools-an-imperfect-breakthrough-357962c34364
+Title: Lending pools: an imperfect breakthrough.
 
 What are decentralized lending pools (aka liquidity protocols)?
 The principle behind DeFi lending pools such as Aave or Compound is rather easy to understand. It all boils down to supplying and borrowing assets.
