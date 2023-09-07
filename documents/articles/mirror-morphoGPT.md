@@ -1,4 +1,5 @@
-Link: https://morpho.mirror.xyz/JSZwQrq3f7tzSiSRLxCatWacum4wLyJvPBmKXrhGzTA Title: MorphoGPT: A Community’s Personal Assistant
+Link: https://morpho.mirror.xyz/JSZwQrq3f7tzSiSRLxCatWacum4wLyJvPBmKXrhGzTA
+Title: MorphoGPT: A Community’s Personal Assistant
 
 Ever wished for a tool that's on standby to answer queries 24/7?
 Enter MorphoGPT, an AI assistant leveraging the OpenAI API (https://openai.com/blog/openai-api) and the Pinecone API (https://www.pinecone.io/) to serve the Morpho community on Discord. Whether you're a user seeking answers or a developer looking for a ready-to-use tool for your documentation, MorphoGPT is here to facilitate.
