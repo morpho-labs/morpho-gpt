@@ -1,5 +1,5 @@
 Link: https://morpho.mirror.xyz/6rAItZBluntcXDPeHIBKCNlxwthyTrpBeZFcNqhCRdM
-TItle: Morpho Raises $18M Co-led by a16z and Variant Article
+Title: Morpho Raises $18M Co-led by a16z and Variant Article
 Morpho Raises $18M Co-led by a16z and Variant to Transform Decentralized Lending!
 12 Jul 2022
 Paul Frambot

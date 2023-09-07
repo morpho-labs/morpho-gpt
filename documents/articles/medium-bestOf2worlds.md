@@ -1,4 +1,5 @@
-Link: https://medium.com/morpho-labs/morpho-the-best-of-two-worlds-1d8b641b8393 Title: Morpho: the best of two worlds.
+Link: https://medium.com/morpho-labs/morpho-the-best-of-two-worlds-1d8b641b8393
+Title: Morpho: the best of two worlds.
 
 Limitations of past and current lending systems.
 In the first article (https://medium.com/morpho-labs/lending-pools-an-imperfect-breakthrough-357962c34364), we saw that lending protocols with a pool-to-peer design provide instant liquidity and allow for the fungibility of loans. However, it comes at the cost of capital efficiency which generates a spread between borrowing and lending (few lenders, many borrowers). Moreover, in order for the market to remain fully liquid, a lot of capital has to constantly sits idle. This is incentivized with algorithmically designed (and thus constrained) rates. Despite those limitations, peer-to-pool has gained a lot of traction in the past years.
@@ -17,6 +18,7 @@ Enters Alice, who wants to borrow 10 ETH. In order to do so, she deposits BAT as
 Bob and Alice or not relying on Compound’s pools anymore, Bob doesn’t have to share the profits with other lenders, and the capital he deposited is fully utilized. Alice doesn’t have to pay interest to many lenders. Both get the improved P2P APY that is always above the supply APY and below the borrow APY of Compound.
 
 So, by combining pool-to-peer and peer-to-peer, Morpho solves the main issues that peer-to-peer and pool-to-peer protocols are facing:
+
 1. Instant liquidity. Borrowers can get a loan in a split second. The same goes for lenders who can get their money back instantly whether they are in the pool or matched peer-to-peer.
 2. The assets are in the pool. Morpho just removes them from there and gives them back to the lender.
 3. The lender is matched in peer-to-peer. Morpho gives the asset back to the lender, and the borrower is either matched again peer-to-peer or goes back into the pool (and gets the pool APY). Obviously, the same logic applies when a borrower repays the lender.
