@@ -1,5 +1,9 @@
 Link: https://morpho.mirror.xyz/F652srnxjv4qsIEHLUrDwOvrYgXU8p0io2cNogb2BJY
-Title: It’s time to talk about DeFi’s risk management problems.
+Title: Risk management problems Article
+
+It’s time to talk about DeFi’s risk management problems.
+16 August 2023
+Paul Frambot
 
 DeFi is still nascent and developing, with many of its components still to be refined in the coming years. Yet, if we are being honest with ourselves, there are also parts of the stack we should spend more time challenging.
 Decentralized risk management has largely been a taboo topic as it has become critical to the security of some DeFi platforms while remaining very centralized and opaque to most.
