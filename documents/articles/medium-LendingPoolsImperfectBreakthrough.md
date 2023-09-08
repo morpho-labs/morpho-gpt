@@ -1,6 +1,10 @@
 Link: https://medium.com/morpho-labs/lending-pools-an-imperfect-breakthrough-357962c34364
 Title: Lending pools: an imperfect breakthrough.
 
+Lending pools: an imperfect breakthrough.
+01 February 2022
+Mathieu Courtois
+
 What are decentralized lending pools (aka liquidity protocols)?
 The principle behind DeFi lending pools such as Aave or Compound is rather easy to understand. It all boils down to supplying and borrowing assets.
 Lenders can supply their crypto-assets (ETH, DAI, WBTC, amongst others) into a pool and earn interests on their tokens according to the supply APY (Annual Percentage Yield) of the pool. The supplied tokens are then sent to a smart contract and become available for other users to borrow. The smart contract issues another token (cTokens on Compound, aTokens on Aave) to the lender, that represents the supplied tokens with interests.
