@@ -2,7 +2,7 @@ Link: https://snapshot.org/#/morpho.eth/proposal/0x3a092cac286c9afdebc899bbb04c3
 Title: MIP6 - Add granular pausing and asset deprecation
 This submission proposes to give the governance more granularity over its power on the protocols, by adding granular pausing, asset deprecation, and increase peer-to-peer deltas.
 
-As written in the forum on on 3 December 2022, discussion related to that: https://forum.morpho.org/t/mip-add-granular-pausing-and-asset-deprecation/213
+As written in the forum on 3 December 2022, discussion related to that: https://forum.morpho.org/t/mip-add-granular-pausing-and-asset-deprecation/213
 
 Here was the discussion related to that:
 Context
