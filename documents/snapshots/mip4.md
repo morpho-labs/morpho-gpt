@@ -2,7 +2,7 @@ Link: https://snapshot.org/#/morpho.eth/proposal/0x051a622bf3e9e340718d73483a7ff
 Title: MIP4 - Age 3 total distribution
 This submission proposes to distribute 10M $MORPHO tokens (1% of total supply) during Age 3, with a constant distribution across all three epochs.
 
-As written in the forum on on 22 November 2022, discussion related to that: https://forum.morpho.org/t/mip-age-3-total-distribution/201
+As written in the forum on 22 November 2022, discussion related to that: https://forum.morpho.org/t/mip-age-3-total-distribution/201
 
 Here was the discussion related to that:
 Context
