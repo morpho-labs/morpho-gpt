@@ -2,7 +2,7 @@ Link: https://snapshot.org/#/morpho.eth/proposal/bafkreiaalv4o772l5yf6idauzh25be
 Title: MIP1 - Early Core Contributors Allocation
 This submission proposes to allocate $MORPHO tokens to the initial core contributors of the protocol.
 
-As written in the forum on on 19 August 2022, discussion related to that: https://forum.morpho.xyz/t/mip1-early-core-contributors-allocation/94
+As written in the forum on 19 August 2022, discussion related to that: https://forum.morpho.xyz/t/mip1-early-core-contributors-allocation/94
 
 Here was the discussion related to that:
 Summary
