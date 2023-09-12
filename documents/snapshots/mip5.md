@@ -2,7 +2,7 @@ Link: https://snapshot.org/#/morpho.eth/proposal/0x816e4971cd3919bc8df7ad0892ead
 Title: MIP5 - Whitelist Morpho's vaults and Sense contracts to transfer $MORPHO tokens
 This submission proposes to whitelist Morpho’s ERC4626 vaults and the rewards distributor contract to transfer $MORPHO tokens to users. Moreover, the proposal includes the whitelisting of the Sense contracts.
 
-As written in the forum on on 9 November 2022, discussion related to that: https://forum.morpho.org/t/mip-erc4626-adapter-whitelisting/178/1
+As written in the forum on 9 November 2022, discussion related to that: https://forum.morpho.org/t/mip-erc4626-adapter-whitelisting/178/1
 
 Here was the discussion related to that:
 Summary
