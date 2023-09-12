@@ -2,7 +2,7 @@ Link: https://snapshot.org/#/morpho.eth/proposal/bafkreigzfyi7m3he4xvg7fj3zs2r6a
 Title: MIP2 - Governance Update
 This submission proposes to update Morpho’s Snapshot rule to add the delegation features and to include changes made by MIP1.
 
-As written in the forum on on 1 November 2022, discussion related to that: https://forum.morpho.org/t/mip2-governance-update/155
+As written in the forum on 1 November 2022, discussion related to that: https://forum.morpho.org/t/mip2-governance-update/155
 
 Here was the discussion related to that:
 Summary
