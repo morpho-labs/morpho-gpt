@@ -2,7 +2,7 @@ Link: https://snapshot.org/#/morpho.eth/proposal/0x7c66a5c48b8206a2aca51d8050f8a
 Title: MIP3 - Introducing Morpho Gauges for Age 3
 This submission proposes to set up a gauge system for the distribution of Age 3 rewards.
 
-As written in the forum on on 4 November 2022, discussion related to that: https://forum.morpho.org/t/mip-introducing-morpho-gauges-for-age-3/169
+As written in the forum on 4 November 2022, discussion related to that: https://forum.morpho.org/t/mip-introducing-morpho-gauges-for-age-3/169
 
 Here was the discussion related to that:
 Summary
