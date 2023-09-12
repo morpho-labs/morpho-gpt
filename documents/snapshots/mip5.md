@@ -11,8 +11,11 @@ Proposal to whitelist Morpho’s ERC4626 vaults and the rewards distributor cont
 Context
 The Morpho DAO recently deployed Morpho’s vaults. To be able to redistribute $MORPHO rewards among vault users, a set of smart contracts must be whitelisted to transfer MORPHO tokens.
 As of now, the $MORPHO token (deployed here (https://etherscan.io/address/0x9994e35db50125e0df82e4c2dde62496ce330999) and the repository can be found here (https://github.com/morpho-dao/morpho-token)) is not transferrable. However, the $MORPHO token implementation has different roles:
-- 0) Allows triggering transfer and transferFrom functions.
-- 1) Allows to mint tokens (only the DAO multisig has this role) and Allows 0).
+
+. 0)  Allows triggering transfer and transferFrom functions.
+
+. 1)  Allows to mint tokens (only the DAO multisig has this role) and Allows 0).
+
 The RewardsDistributor (https://etherscan.io/address/0x3b14e5c73e0a56d607a8688098326fd4b4292135) for Morpho-Aave and Morpho-Compound has the role 1), so that users can claim their $MORPHO rewards.
 
 Rewards Distribution for Vaults
