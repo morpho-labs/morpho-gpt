@@ -17,11 +17,11 @@ $\alpha$ at 45.4% for WBTC market,
 $\alpha$ at 58.4% for USDT market
 
 Context
-The peer-to-peer rate proposed by the Morpho protocol is defined by a formula detailed in the [proposal](https://forum.morpho.org/t/mip-peer-to-peer-index-cursors-update/250)
+The peer-to-peer rate proposed by the Morpho protocol is defined by a formula detailed in the proposal (https://forum.morpho.org/t/mip-peer-to-peer-index-cursors-update/250)
 The $\alpha$  coefficient is called the P2P index cursor and represents the percentage of the spread where the peer-to-peer rate sits. Since the launch of the Morpho protocol, the peer-to-peer index cursor has positioned set to one-half of the spread (taking into account the rewards on Morpho-Compound).
 
 Methodology
-To calculate the peer-to-peer index cursors, we introduce a curve depending on the utilization, similar to the rate curve of Aave and Compound. The utilization of a Morpho market is defined by a formula detailed in the [proposal](https://forum.morpho.org/t/mip-peer-to-peer-index-cursors-update/250)
+To calculate the peer-to-peer index cursors, we introduce a curve depending on the utilization, similar to the rate curve of Aave and Compound. The utilization of a Morpho market is defined by a formula detailed in the proposal (https://forum.morpho.org/t/mip-peer-to-peer-index-cursors-update/250)
 The proposed curve, described in the proposal, is meant to be a guideline to update the peer-to-peer index cursors as the different markets’ utilization varies. The curve should be designed so that it is symmetric on the borrow and on the supply side but also includes a bounded index cursor range and a tunable slope.
 There are five parameters in this formula, and their meaning and choice of numerical value is explained in the proposal.
 For more stable results, the utilization used for the computation is averaged over one month.
