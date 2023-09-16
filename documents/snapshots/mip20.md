@@ -1,6 +1,5 @@
 Link: https://snapshot.org/#/morpho.eth/proposal/0x7ba30ea5ab3881873b73835d1c4bf6284f0269638a5bfdef09b8929f3beff711
 Title: MIP20 - Ratification of June 2023 upgrades
-Author(s): Morpho Association
 This submission proposes to ratify the upgrades that occurred and was required to protect users’ funds after a vulnerability disclosure in June 2023.
 
 As written in the forum on 9 August 2023, discussion related to that: https://forum.morpho.org/t/mip-ratification-of-june-2023-upgrades/344
