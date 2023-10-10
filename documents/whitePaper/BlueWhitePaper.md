@@ -1,4 +1,4 @@
-Link: https://whitepaper.morpho.org/
+Link: https://whitepaper.morpho.org/blue
 Title: Morpho Blue Whitepaper
 
 This is Morpho Blue Whitepaper
