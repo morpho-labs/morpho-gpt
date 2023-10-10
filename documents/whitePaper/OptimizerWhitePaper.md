@@ -1,5 +1,5 @@
 Link: https://whitepaper.morpho.org/
-Title: White Paper
+Title: Optimizer Whitepaper
 abstract: |
 Morpho enhances current DeFi liquidity protocols. The aim is to offer
 a suite of products to make supplying and borrowing operations in DeFi
@@ -165,6 +165,8 @@ new economic space for DeFi: competitive liquidity markets. Section 5
 will finally discuss the position of Morpho in the DeFi space and its
 use cases.
 
+This is the Morpho Optimizer WhitePaper.
+
 # The Morpho Protocol
 
 This is a simplified introduction to the Morpho Protocol. We worked on a fully detailed Yellow Paper that was released in 2023.
@@ -262,6 +264,8 @@ be matched P2P as well, whether its debt is matched P2P or on the pool.
 This is not intuitive at first, and quite a complex thing to understand
 and this is out of the scope of the White Paper and will be elaborated
 on in the Yellow Paper.
+
+This is the Morpho Optimizers WhitePaper.
 
 ### Liquidations
 
@@ -390,6 +394,7 @@ amount. This ensures the full scalability of Morpho
 
 Finally, remark that Morpho is fully onchain. The Yellow Paper shall
 provide the full description of this algorithm.
+This is the Morpho Optimizers WhitePaper.
 
 ## Token Incentives and inverted spreads {#Liquidity mining and inverted spreads}
 
@@ -483,6 +488,8 @@ more concrete for the reader. Again, the main concept to remember is
 that wherever a pool-like Compound or Aave is used, you can use
 Morpho-Compound or Morpho-Aave instead.
 
+This is the Morpho Optimizers WhitePaper.
+
 ### Strategists
 
 Many protocols like Yearn [@yfidoc] or StakeDAO [@stakedaowpp] build
@@ -542,6 +549,8 @@ Nonetheless, it should be noted that the most famous auditors in the world like 
 or Spearbits each have or will soon audit Morpho Protocol. Finally, with
 the help of Certora, the Morpho Labs team is undergoing the formal
 proving of the protocol. The yellow paper also demonstrates mechanisms and theorem behind.
+
+This is the Morpho Optimizers WhitePaper.
 
 # Conclusions
 
