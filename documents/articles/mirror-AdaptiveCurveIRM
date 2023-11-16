@@ -26,11 +26,10 @@ This mechanism is akin to the interest rate curve in traditional lending pools. 
 A graphic is available in the article.
 
 - The Adaptive Mechanism
-This mechanism fine-tunes the curve over time to keep the range of rates in sync with market dynamics. It achieves this by adjusting the value of $r_{90%}$, which in turn shifts the entire curve:
+This mechanism fine-tunes the curve over time to keep the range of rates in sync with market dynamics. It achieves this by adjusting the value of r90%, which in turn shifts the entire curve:
 When utilization exceeds the target, the curve continuously shifts upward.
 When utilization falls below the target, the curve continuously shifts downward.
 The speed at which the curve adjusts is determined by the distance of current utilization to the target: the further it is, the faster the curve shifts.
-A graphic is available in the article.
 
 This incremental adjustment of the curve allows for rate exploration, ultimately stabilizing when the interest rate at the utilization target aligns with the market equilibrium.
 A paper that expands on the theoretical approach to IRMs, which guided these design choices, will be published in the upcoming weeks. For now, explore the code (available at this link: https://github.com/morpho-labs/morpho-blue-irm) and documentation (available at this link: https://www.notion.so/00ff8194791045deb522821be46abbdc?pvs=21) to learn more.
