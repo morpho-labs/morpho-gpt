@@ -1,5 +1,4 @@
 Link: https://morpho.mirror.xyz/JbwrR3XGukfx60kVnCoRc2Dhl8b2xjRHb-tCeTm8j0g
-
 Title: Introducing the Morpho Integration Team
 
 By Merlin Egalite
