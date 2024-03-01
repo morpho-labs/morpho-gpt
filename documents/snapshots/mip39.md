@@ -1,7 +1,9 @@
-Link: https://snapshot.org/#/morpho.eth/proposal/0x524daef3dfeb9dc2aa50e7f13d7d3b571f4d4bfa3d6577f023cb1cd4925f0187
-Title: MIP37 - Steakhouse Financial: wUSDM, PYUSD and USDT MetaMorpho Vault Whitelisting
+Link: https://snapshot.org/#/morpho.eth/proposal/0xc2f86a304e2bc103a3aa24dced98db896e4d3fd2e4e9841410d452ed54bc2d2f
+Title: MIP39 - Steakhouse Financial: wUSDM, PYUSD and USDT MetaMorpho Vault Whitelisting
 
 This submission proposes to whitelist Steakhouse Financial wUSDM, PYUSD and USDT MetaMorpho vaults address to allow the transfer of potential $MORPHO rewards to their depositors.
+
+Context: Same proposal was voted and accepted with MIP37 but Quorum wasn't reached.
 
 As written in the forum on 31 January 2024, discussion related to that: https://forum.morpho.org/t/steakhouse-financial-wusdm-pyusd-and-usdt-metamorpho-vault-whitelisting/452
 
@@ -29,4 +31,4 @@ Conclusion
 As stablecoin specialists, Steakhouse Financial has cultivated significant experience and network within DeFi. Leveraging our insights from helping Dai (MakerDAO) and stETH (LidoDAO) grow, we look forward to supporting relatively new assets like USDM and PYUSD gain wide adoption. We are also excited to bring a credible alternative to the existing USDT borrowing/lending market, using our bluechip “dual engine” strategy.
 Steakhouse has begun educating investment funds, wallets and fintech players on MetaMorpho with the successful launch of the steakUSDC vault. We look forward to continuing on that journey with our three new proposed vaults and bringing value to the Morpho ecosystem.
 
-The proposal was voted on 25 February 2024 but did not reach the required quorum.
+The proposal was voted on and accepted on 29 February 2024.
