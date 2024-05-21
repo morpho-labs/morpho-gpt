@@ -17,7 +17,7 @@
     "start": "node dist/bot.js"
   },
   "dependencies": {
-    "@pinecone-database/pinecone": "^0.1.6",
+    "@pinecone-database/pinecone": "^2.2.1",
     "commander": "^11.0.0",
     "discord.js": "^14.11.0",
     "dotenv": "^16.1.3",

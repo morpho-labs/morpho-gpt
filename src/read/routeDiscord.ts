@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { PineconeClient } from "@pinecone-database/pinecone";
+import { Pinecone } from "@pinecone-database/pinecone";
 import { Message } from "discord.js";
 import {
   queryPineconeVectorStore,
@@ -19,7 +19,7 @@ import {
 export const handleReadCommand = async (
   message: Message,
   question: string,
-  pineconeClient: PineconeClient,
+  pineconeClient: Pinecone,
   pineconeTestIndex: string,
   openAIApiKey: string
 ) => {
@@ -39,14 +39,13 @@ export const handleReadCommand = async (
 
     if (result) {
       // Select the top 3 most probable distinct links
-      let distinctDocumentLinks: string[] = [
-        ...new Set(result.documentLinks as string[]),
+      let distinctDocumentLinks: { link: string; title: string }[] = [
+        ...new Set(result.documentLinks as { link: string; title: string }[]),
       ];
-      let documentLinks: string[] = distinctDocumentLinks.slice(0, 3);
-
+      let documentLinks = distinctDocumentLinks.slice(0, 3);
       // Prepare a string that contains all the document links
       let linksString = documentLinks
-        .map((link, index) => `**Link ${index + 1}:** <${link}>`)
+        .map((doc, index) => `**- [${doc.title}](${doc.link})**`)
         .join("\n");
 
       // Send the answer and document links as a message to the Discord channel
@@ -62,4 +61,4 @@ export const handleReadCommand = async (
     // Send an error message to the Discord channel if an error occurs
     message.channel.send("An error occurred while processing your request.");
   }
-}
+};
