@@ -2,7 +2,7 @@ import "dotenv/config";
 import Discord, { GatewayIntentBits, Events, Message } from "discord.js";
 import { handleReadCommand } from "./read/routeDiscord";
 import { handleSetupCommand } from "./setup/routeDiscord";
-import { PineconeClient } from "@pinecone-database/pinecone";
+import { Pinecone } from "@pinecone-database/pinecone";
 import { createPineconeClient } from "./services/pinecone";
 
 /**
@@ -39,7 +39,7 @@ function checkQuota(userId: string): boolean {
  */
 async function handleMessage(
   message: Message,
-  pineconeClient: PineconeClient,
+  pineconeClient: Pinecone,
   pineconeTestIndex: string,
   openAIApiKey: string
 ): Promise<void> {
@@ -73,6 +73,7 @@ async function startBot() {
   const pineconeApiKey = process.env.PINECONE_API_KEY ?? "";
   const pineconeEnvironment = process.env.PINECONE_ENVIRONMENT ?? "";
 
+  console.log("Starting bot...");
   const discordClient = new Discord.Client({
     intents: [
       GatewayIntentBits.Guilds,
@@ -81,9 +82,9 @@ async function startBot() {
     ],
   });
 
+  console.log("Creating Pinecone client...");
   const pineconeClient = await createPineconeClient({
     apiKey: pineconeApiKey,
-    environment: pineconeEnvironment,
   });
   console.log("Pinecone client created");
   try {

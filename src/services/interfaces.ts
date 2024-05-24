@@ -8,11 +8,6 @@ export interface PineconeClientParams {
    * The API key used to authenticate with the Pinecone service.
    */
   apiKey: string;
-
-  /**
-   * The environment where the Pinecone service is running.
-   */
-  environment: string;
 }
 
 /**
@@ -32,6 +27,11 @@ export interface MyScoredVector extends ScoredVector {
      * The link to the document.
      */
     docLink: string;
+
+    /**
+     * The title of the document.
+     */
+    docTitle: string;
   };
 }
 
@@ -72,6 +72,11 @@ export interface Vector {
      * The link to the document associated with the vector.
      */
     docLink: string;
+
+    /**
+     * The title of the document associated with the vector.
+     */
+    docTitle: string;
   };
 }
 

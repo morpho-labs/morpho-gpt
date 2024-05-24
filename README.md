@@ -50,21 +50,30 @@ To run this project, you need the following:
 
 3. Create a .env file in the root directory of the project and populate it with your API keys and the name of the env & index on pinecone:
 
-  ```bash
+```bash
 - OPENAI_API_KEY=your_openai_api_key
 - PINECONE_API_KEY=your_pinecone_api_key
 - PINECONE_ENVIRONMENT=your_pinecone_environment
 - PINECONE_INDEX=your_pinecone_index
 - DISCORD_API_KEY=your_discord_key
 - SPECIFIC_CHANNEL_ID=your_specific_channel
-  ```
-4. Update Pinecone index
-   
+```
+
+4. Create Pinecone index:
+
+   ```bash
+
+   npx morpho-gpt-cli create-index --key PINECONE_API_KEY --environment PINECONE_ENVIRONMENT --index PINECONE_INDEX
+   ```
+
+5. Update Pinecone index
+
    ```bash
 
    npx morpho-gpt-cli update-index --key PINECONE_API_KEY --environment PINECONE_ENVIRONMENT --index PINECONE_INDEX --openAIApiKey OPENAI_API_KEY --pathDocs "./documents"
    ```
-5. Start the bot:
+
+6. Start the bot:
 
    ```bash
 
