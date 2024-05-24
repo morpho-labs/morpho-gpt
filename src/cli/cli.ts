@@ -48,7 +48,6 @@ program
 
     const pineconeClient = await createPineconeClient({
       apiKey: key,
-      environment: environment,
     });
 
     await createPineconeIndexIfNotExist(
@@ -77,10 +76,8 @@ program
       "PINECONE_INDEX",
       "test-index"
     );
-
     const key = getOptionOrEnv(options, "key", "PINECONE_API_KEY", null);
     exitIfNull(key, "Missing Pinecone API key");
-
     const environment = getOptionOrEnv(
       options,
       "environment",
@@ -88,7 +85,6 @@ program
       null
     );
     exitIfNull(environment, "Missing Pinecone Environment");
-
     const openAIApiKey = getOptionOrEnv(
       options,
       "openAIApiKey",
@@ -101,7 +97,6 @@ program
     exitIfNull(pathDocs, "Missing path for the documentation");
     const pineconeClient = await createPineconeClient({
       apiKey: key,
-      environment: environment,
     });
     const loader = new DirectoryLoader(pathDocs, {
       ".txt": (path: string) => new TextLoader(path),

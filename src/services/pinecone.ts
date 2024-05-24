@@ -3,28 +3,25 @@ import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { OpenAI } from "langchain/llms/openai";
 import { loadQAStuffChain } from "langchain/chains";
 import { Document } from "langchain/document";
-import { PineconeClient } from "@pinecone-database/pinecone";
+import { Pinecone } from "@pinecone-database/pinecone";
 import { QueryResponse as PineconeQueryResponse } from "@pinecone-database/pinecone/dist/pinecone-generated-ts-fetch/models/QueryResponse";
-import { VectorOperationsApi } from "@pinecone-database/pinecone/dist/pinecone-generated-ts-fetch";
 import {
   MyScoredVector,
   PineconeClientParams,
   QueryResponse,
   Vector,
 } from "./interfaces";
+import "dotenv/config";
 
 /**
  * Creates a new Pinecone client and initializes it with the given parameters.
  * @param  params - The parameters to initialize the Pinecone client with.
  * @returns - The created and initialized Pinecone client.
  */
-export const createPineconeClient = async (
-  params: PineconeClientParams
-) => {
-  const client = new PineconeClient();
-  await client.init(params);
+export const createPineconeClient = async (params: PineconeClientParams) => {
+  const client = new Pinecone({ apiKey: params.apiKey });
   return client;
-}
+};
 
 /**
  * Queries the Pinecone vector store with a given question, returning the store's response.
@@ -34,7 +31,7 @@ export const createPineconeClient = async (
  * @returns - The response from the Pinecone vector store.
  */
 export const queryPineconeVectorStore = async (
-  client: PineconeClient,
+  client: Pinecone,
   indexName: string,
   question: string
 ) => {
@@ -42,12 +39,10 @@ export const queryPineconeVectorStore = async (
   const index = client.Index(indexName);
   const queryEmbedding = await new OpenAIEmbeddings().embedQuery(question);
   const pineconeResponse = await index.query({
-    queryRequest: {
-      topK: 10,
-      vector: queryEmbedding,
-      includeMetadata: true,
-      includeValues: true,
-    },
+    topK: 10,
+    vector: queryEmbedding,
+    includeMetadata: true,
+    includeValues: true,
   });
 
   return pineconeResponse;
@@ -66,15 +61,18 @@ export const formatPineconeResponse = (
       if (
         match.metadata &&
         "pageContent" in match.metadata &&
-        "docLink" in match.metadata
+        "docLink" in match.metadata &&
+        "docTitle" in match.metadata
       ) {
         const ret: MyScoredVector = {
           ...match,
           metadata: {
             pageContent: (match.metadata as any).pageContent,
             docLink: (match.metadata as any).docLink,
+            docTitle: (match.metadata as any).docTitle,
           },
         };
+        console.log("ret:", ret);
         return ret;
       } else {
         return match as MyScoredVector;
@@ -102,16 +100,17 @@ export const queryLanguageModelWithPineconeResponse = async (
   if (queryResponse?.matches?.length) {
     console.log(`Found ${queryResponse.matches.length} matches...`);
     const instructions =
-      "You're an AI assistant. Based on the following excerpts from a long document, provide a conversational answer to the question asked. If the answer isn't in the context, simply respond with 'Hmm, I'm not sure.' Don't invent an answer. If the question isn't related to the context, state that you are programmed to answer questions relevant to the given context. Remember, you cannot use images or visual content to form your answer. Do the answer in less than 2000 characters.";
+      "You're an AI assistant. Based on the following excerpts from a long document, provide a conversational answer to the question asked. If the answer isn't in the context, simply respond with 'Hmm, I'm not sure. Albist will revert here soon.' Don't invent an answer. If the question isn't related to the context, state that you are programmed to answer questions relevant to the given context. Remember, you cannot use images or visual content to form your answer. Do the answer in less than 1800 characters. Also, never use the @ symbol in your response.";
     const preparedQuestion = `${instructions}\n\n${question}`;
-    const llm = new OpenAI({ modelName: "gpt-3.5-turbo-16k", openAIApiKey });
+    const llm = new OpenAI({ modelName: "gpt-4o", openAIApiKey });
     const chain = loadQAStuffChain(llm);
     const concatenatedPageContent = queryResponse.matches
       .map((match) => match.metadata?.pageContent ?? "")
       .join(" ");
-    const documentLinks = queryResponse.matches.map(
-      (match) => match.metadata?.docLink ?? ""
-    );
+    const documentLinks = queryResponse.matches.map((match) => ({
+      link: match.metadata?.docLink ?? "",
+      title: match.metadata?.docTitle ?? "",
+    }));
     const result = await chain.call({
       input_documents: [new Document({ pageContent: concatenatedPageContent })],
       question: preparedQuestion,
@@ -122,7 +121,7 @@ export const queryLanguageModelWithPineconeResponse = async (
       documentLinks: documentLinks,
     };
   } else {
-    console.log("Since there are no matches, GPT-3.5 will not be queried.");
+    console.log("Since there are no matches, GPT-4o will not be queried.");
   }
 };
 
@@ -134,7 +133,7 @@ export const queryLanguageModelWithPineconeResponse = async (
  * @param timeout - The timeout in milliseconds to wait for the index to initialize.
  */
 export const createPineconeIndexIfNotExist = async (
-  client: PineconeClient,
+  client: Pinecone,
   indexName: string,
   vectorDimension: number,
   timeout: number = 180000
@@ -142,17 +141,21 @@ export const createPineconeIndexIfNotExist = async (
   // Check if the index exists
   console.log(`Checking "${indexName}"...`);
   const existingIndexes = await client.listIndexes();
-  // If index does not exist, create it
-  if (!existingIndexes.includes(indexName)) {
+  console.log("existing indexes;", existingIndexes);
+
+  // Check if indexes are defined and if indexName exists in the array
+  if (
+    existingIndexes.indexes &&
+    !existingIndexes.indexes.map((index) => index.name).includes(indexName)
+  ) {
     // 4. Log index creation initiation
     console.log(`Creating "${indexName}"...`);
     // 5. Create index
     await client.createIndex({
-      createRequest: {
-        name: indexName,
-        dimension: vectorDimension,
-        metric: "cosine",
-      },
+      name: indexName,
+      dimension: vectorDimension,
+      metric: "cosine",
+      spec: { serverless: { cloud: "aws", region: "us-west-1" } },
     });
     // 6. Log successful creation
     console.log(
@@ -171,36 +174,36 @@ export const createPineconeIndexIfNotExist = async (
  * @param doc - The document to process.
  * @param openAIApiKey - The API key to use for the OpenAI language model.
  */
-const processDocument = async (
-  doc: Document,
-  openAIApiKey: string
-) => {
+const processDocument = async (doc: Document, openAIApiKey: string) => {
   const txtPath = await doc.metadata.source;
   const text = doc.pageContent;
-
-  const documentLinkMatch = text.match(/Link: (.+)/);
-  const documentLink = documentLinkMatch ? documentLinkMatch[1] : "";
-
+  const lines = text.split("\n");
+  const documentLink = lines[0].match(/^Link: (.+)$/)?.[1] ?? "";
+  const documentTitle = lines[1].match(/^Title: (.+)$/)?.[1] ?? "Untitled";
   const textSplitter = new RecursiveCharacterTextSplitter({ chunkSize: 1000 });
   const chunks = await textSplitter.createDocuments([text]);
-
+  console.log(documentLink, documentTitle);
   const embeddingsArrays = await new OpenAIEmbeddings({
     openAIApiKey,
   }).embedDocuments(
     chunks.map((chunk) => chunk.pageContent.replace(/\n/g, " "))
   );
 
-  return chunks.map((chunk, idx) => ({
-    id: `${txtPath}_${idx}`,
-    values: embeddingsArrays[idx],
-    metadata: {
-      ...chunk.metadata,
-      loc: JSON.stringify(chunk.metadata.loc),
-      pageContent: chunk.pageContent,
-      txtPath: txtPath,
-      docLink: documentLink,
-    },
-  }) as Vector);
+  return chunks.map(
+    (chunk, idx) =>
+      ({
+        id: `${txtPath}_${idx}`,
+        values: embeddingsArrays[idx],
+        metadata: {
+          ...chunk.metadata,
+          loc: JSON.stringify(chunk.metadata.loc),
+          pageContent: chunk.pageContent,
+          txtPath: txtPath,
+          docLink: documentLink,
+          docTitle: documentTitle,
+        },
+      } as Vector)
+  );
 };
 
 /**
@@ -208,14 +211,11 @@ const processDocument = async (
  * @param index - The Pinecone index to update.
  * @param vectors - The vectors to upsert.
  */
-const upsertVectors = async (
-  index: VectorOperationsApi,
-  vectors: Vector[]
-) => {
+const upsertVectors = async (index: any, vectors: Vector[]) => {
   const batchSize = 100;
   for (let i = 0; i < vectors.length; i += batchSize) {
     const batch = vectors.slice(i, i + batchSize);
-    await index.upsert({ upsertRequest: { vectors: batch } });
+    await index.upsert(batch);
   }
 };
 
@@ -227,7 +227,7 @@ const upsertVectors = async (
  * @param docs - The documents to use for creating vectors.
  */
 export const updatePineconeIndex = async (
-  client: PineconeClient,
+  client: Pinecone,
   openAIApiKey: string,
   indexName: string,
   docs: Document[]
